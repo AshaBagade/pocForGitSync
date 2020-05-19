@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Post Proviosioning Rest msg name</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_ibmg3_hcms.Post_Provisioning _Rest_Msg</name>
+        <read_roles/>
+        <suffix>Post_Provisioning _Rest_Msg</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2019-11-21 06:05:05</sys_created_on>
+        <sys_id>e3eba13cdb190850e0f5325f9d9619eb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_ibmg3_hcms.Post_Provisioning _Rest_Msg</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_properties_e3eba13cdb190850e0f5325f9d9619eb</sys_update_name>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2019-11-21 06:05:05</sys_updated_on>
+        <type>string</type>
+        <value>x_ibmg3_hcms.Post Provisioning Status Call</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=e3eba13cdb190850e0f5325f9d9619eb"/>
+</record_update>

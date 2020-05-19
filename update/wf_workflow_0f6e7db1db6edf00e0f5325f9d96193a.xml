@@ -1,0 +1,1598 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="wf_workflow_version">
+    <wf_workflow_version action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <activity_stages>{"ends":["17ff99eddb8fc010e0f5325f9d9619ae"],"subflows":[],"activities":{"9fff99eddb8fc010e0f5325f9d9619a8":"5bff19eddb8fc010e0f5325f9d9619ee"},"stages":{"5bff19eddb8fc010e0f5325f9d9619ee":{"duration":"1 Day","order":120,"stageId":"5bff19eddb8fc010e0f5325f9d9619ee","name":"Fulfillment","value":"fulfillment"}}}</activity_stages>
+        <after_business_rules>false</after_business_rules>
+        <checked_out/>
+        <checked_out_by/>
+        <column_renderer display_value="Workflow-driven">a56213111b030100adca1e094f0713ac</column_renderer>
+        <condition/>
+        <condition_type/>
+        <description>This workflow manages the states for requested items and their assoicated tasks for Broker Provisioned Patterns.</description>
+        <expected_sequences>d7ff99eddb8fc010e0f5325f9d9619ad,d3ff99eddb8fc010e0f5325f9d9619ab,d3ff99eddb8fc010e0f5325f9d9619a5,93ff99eddb8fc010e0f5325f9d9619aa,5fff19eddb8fc010e0f5325f9d9619f0,13ff99eddb8fc010e0f5325f9d9619af,5bff99eddb8fc010e0f5325f9d9619b0,9fff99eddb8fc010e0f5325f9d9619a8,d7ff99eddb8fc010e0f5325f9d9619ac,17ff99eddb8fc010e0f5325f9d9619ae</expected_sequences>
+        <expected_time>1970-01-01 14:00:00</expected_time>
+        <expected_time_type/>
+        <full_sequences>d7ff99eddb8fc010e0f5325f9d9619ad,d3ff99eddb8fc010e0f5325f9d9619ab,d3ff99eddb8fc010e0f5325f9d9619a5,93ff99eddb8fc010e0f5325f9d9619aa,5fff99eddb8fc010e0f5325f9d9619a7,5fff19eddb8fc010e0f5325f9d9619f0,1bff19eddb8fc010e0f5325f9d9619ef,13ff99eddb8fc010e0f5325f9d9619af,5bff99eddb8fc010e0f5325f9d9619b0,1fff99eddb8fc010e0f5325f9d9619a6,9fff99eddb8fc010e0f5325f9d9619a8,d7ff99eddb8fc010e0f5325f9d9619ac,17ff99eddb8fc010e0f5325f9d9619ae</full_sequences>
+        <journal/>
+        <max_activity_count>100</max_activity_count>
+        <name>HCMS RQF Default Workflow</name>
+        <not_cacheable>false</not_cacheable>
+        <on_cancel><![CDATA[// This script executes if the workflow is cancelled.// The global variable context_sys_id contains the sys_id of the cancelled workflow context.]]></on_cancel>
+        <order>100</order>
+        <pin_type>set_by_activity</pin_type>
+        <published>true</published>
+        <relative_duration display_value="2 business days by 4pm">3bf802c20a0a0b52008e2859cd8abcf2</relative_duration>
+        <requires_ert>true</requires_ert>
+        <run_multiple>false</run_multiple>
+        <schedule/>
+        <stage_field>stage</stage_field>
+        <stage_order>user_specified</stage_order>
+        <start display_value="Begin">d7ff99eddb8fc010e0f5325f9d9619ad</start>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff19eddb8fc010e0f5325f9d9619ed</sys_id>
+        <sys_mod_count>76</sys_mod_count>
+        <sys_updated_by>asbagad1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2020-04-01 11:10:12</sys_updated_on>
+        <table>sc_req_item</table>
+        <timezone/>
+        <validated>true</validated>
+        <workflow display_value="HCMS RQF Default Workflow">0f6e7db1db6edf00e0f5325f9d96193a</workflow>
+    </wf_workflow_version>
+    <wf_workflow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <description>This workflow manages the states for requested items and their assoicated tasks for Broker Provisioned Patterns.</description>
+        <name>HCMS RQF Default Workflow</name>
+        <preview/>
+        <sys_class_name>wf_workflow</sys_class_name>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-08 00:43:41</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0f6e7db1db6edf00e0f5325f9d96193a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>HCMS RQF Default Workflow</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>wf_workflow_0f6e7db1db6edf00e0f5325f9d96193a</sys_update_name>
+        <sys_updated_by>vram@us.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-06-08 00:43:41</sys_updated_on>
+        <table>sc_req_item</table>
+        <template>false</template>
+        <vars/>
+    </wf_workflow>
+    <wf_stage action="INSERT_OR_UPDATE">
+        <name>Completed</name>
+        <ola>1970-01-01 00:00:00</ola>
+        <order>1100</order>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>53ff19eddb8fc010e0f5325f9d9619ef</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>complete</value>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+    </wf_stage>
+    <wf_stage action="INSERT_OR_UPDATE">
+        <name>Delivery</name>
+        <ola>1970-01-03 00:00:00</ola>
+        <order>140</order>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d7ff19eddb8fc010e0f5325f9d9619ee</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>delivery</value>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+    </wf_stage>
+    <wf_stage action="INSERT_OR_UPDATE">
+        <name>Fulfillment</name>
+        <ola>1970-01-02 00:00:00</ola>
+        <order>120</order>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5bff19eddb8fc010e0f5325f9d9619ee</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>fulfillment</value>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+    </wf_stage>
+    <wf_stage action="INSERT_OR_UPDATE">
+        <name>Request Cancelled</name>
+        <ola>1970-01-01 00:00:00</ola>
+        <order>1000</order>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dbff19eddb8fc010e0f5325f9d9619ee</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>Request Cancelled</value>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+    </wf_stage>
+    <wf_stage action="INSERT_OR_UPDATE">
+        <name>Request Approved</name>
+        <ola>1970-01-01 00:00:00</ola>
+        <order>90</order>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dfff19eddb8fc010e0f5325f9d9619ee</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>request_approved</value>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+    </wf_stage>
+    <wf_stage action="INSERT_OR_UPDATE">
+        <name>Waiting for Approval</name>
+        <ola>1970-01-02 00:00:00</ola>
+        <order>100</order>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5fff19eddb8fc010e0f5325f9d9619ee</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>waiting_for_approval</value>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+    </wf_stage>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Run Script">db8c65aec0a8016501d00259bc7203a4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>12</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Append Shell CI - Task_CI Table</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff19eddb8fc010e0f5325f9d9619ef</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:04:42</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>331</x>
+        <y>421</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=1bff19eddb8fc010e0f5325f9d9619ef"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1bff19eddb8fc010e0f5325f9d9619ef</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1fff19eddb8fc010e0f5325f9d9619ef</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateTaskCIRecord(current);&#13;
+} catch(ex){}&#13;
+</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1bff19eddb8fc010e0f5325f9d9619ef</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1fff19eddb8fc010e0f5325f9d9619ef</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateTaskCIRecord(current);&#13;
+} catch(ex){}&#13;
+</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Append Shell CI - Task_CI Table">1bff19eddb8fc010e0f5325f9d9619ef</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>17ff19eddb8fc010e0f5325f9d9619f0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Run Script">db8c65aec0a8016501d00259bc7203a4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>15</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Append Shell CI - Task_CI Table</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5fff19eddb8fc010e0f5325f9d9619f0</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:04:31</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>334</x>
+        <y>6</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=5fff19eddb8fc010e0f5325f9d9619f0"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>5fff19eddb8fc010e0f5325f9d9619f0</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dfff19eddb8fc010e0f5325f9d9619f0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateTaskCIRecord(current);&#13;
+} catch(ex){}&#13;
+</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>5fff19eddb8fc010e0f5325f9d9619f0</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dfff19eddb8fc010e0f5325f9d9619f0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateTaskCIRecord(current);&#13;
+} catch(ex){}&#13;
+</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Append Shell CI - Task_CI Table">5fff19eddb8fc010e0f5325f9d9619f0</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d7ff19eddb8fc010e0f5325f9d9619f1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Run Script">db8c65aec0a8016501d00259bc7203a4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>11</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Attach Existing CI To Requested Item</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>93ff99eddb8fc010e0f5325f9d9619aa</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:04:33</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>227</x>
+        <y>122</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=93ff99eddb8fc010e0f5325f9d9619aa"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>93ff99eddb8fc010e0f5325f9d9619aa</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>17ff99eddb8fc010e0f5325f9d9619aa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().RetireBrokerShellCI(current);&#13;
+} catch(ex){}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>93ff99eddb8fc010e0f5325f9d9619aa</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>17ff99eddb8fc010e0f5325f9d9619aa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().RetireBrokerShellCI(current);&#13;
+} catch(ex){}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Attach Existing CI To Requested Item">93ff99eddb8fc010e0f5325f9d9619aa</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1fff99eddb8fc010e0f5325f9d9619aa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Begin">c7a5e32c0a0a0b3a002377c24ed8ea76</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>1</databus_lookup_id>
+        <height/>
+        <input/>
+        <is_parent>false</is_parent>
+        <name>Begin</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d7ff99eddb8fc010e0f5325f9d9619ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width>80</width>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>18</x>
+        <y>12</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=d7ff99eddb8fc010e0f5325f9d9619ad"/>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Begin">d7ff99eddb8fc010e0f5325f9d9619ad</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>9fff99eddb8fc010e0f5325f9d9619ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="If">98f621ca0a0a0b5900f7c291f5e45a0e</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>13</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Change Type "Standard/Normal"</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>13ff99eddb8fc010e0f5325f9d9619af</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:04:37</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>381</x>
+        <y>227</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=13ff99eddb8fc010e0f5325f9d9619af"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>13ff99eddb8fc010e0f5325f9d9619af</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff99eddb8fc010e0f5325f9d9619af</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>answer = CheckChangeType();&#13;
+&#13;
+  function CheckChangeType() {&#13;
+     if (current.variables.var_change_type == 'standard') {&#13;
+        return 'yes';&#13;
+     }&#13;
+     return 'no';&#13;
+  }&#13;
+</value>
+        <variable display_value="">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>13ff99eddb8fc010e0f5325f9d9619af</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>57ff99eddb8fc010e0f5325f9d9619af</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>1</value>
+        <variable display_value="">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>13ff99eddb8fc010e0f5325f9d9619af</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>93ff99eddb8fc010e0f5325f9d9619af</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>13ff99eddb8fc010e0f5325f9d9619af</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>93ff99eddb8fc010e0f5325f9d9619af</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>13ff99eddb8fc010e0f5325f9d9619af</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>57ff99eddb8fc010e0f5325f9d9619af</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>1</value>
+        <variable display_value="">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>13ff99eddb8fc010e0f5325f9d9619af</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff99eddb8fc010e0f5325f9d9619af</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>answer = CheckChangeType();&#13;
+&#13;
+  function CheckChangeType() {&#13;
+     if (current.variables.var_change_type == 'standard') {&#13;
+        return 'yes';&#13;
+     }&#13;
+     return 'no';&#13;
+  }&#13;
+</value>
+        <variable display_value="">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Change Type &quot;Standard/Normal&quot;">13ff99eddb8fc010e0f5325f9d9619af</activity>
+        <condition>activity.result == 'no'</condition>
+        <condition_default display_value="No">c1eff6430a0a0b59000f955abe842c94</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>Normal</name>
+        <order>200</order>
+        <short_description/>
+        <skip_during_generate>true</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>13ff99eddb8fc010e0f5325f9d9619b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Change Type &quot;Standard/Normal&quot;">13ff99eddb8fc010e0f5325f9d9619af</activity>
+        <condition>activity.result == 'yes'</condition>
+        <condition_default display_value="Yes">c1ef63200a0a0b59005ef89bae78feb7</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>Standard</name>
+        <order>100</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>93ff99eddb8fc010e0f5325f9d9619b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Run Script">db8c65aec0a8016501d00259bc7203a4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>14</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Create a Normal Change Request</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1fff99eddb8fc010e0f5325f9d9619a6</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:04:55</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>575</x>
+        <y>361</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=1fff99eddb8fc010e0f5325f9d9619a6"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1fff99eddb8fc010e0f5325f9d9619a6</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>9fff99eddb8fc010e0f5325f9d9619a6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateNormalChangeRequest(current);&#13;
+} catch(ex){}&#13;
+</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1fff99eddb8fc010e0f5325f9d9619a6</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>9fff99eddb8fc010e0f5325f9d9619a6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateNormalChangeRequest(current);&#13;
+} catch(ex){}&#13;
+</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Create a Normal Change Request">1fff99eddb8fc010e0f5325f9d9619a6</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>97ff99eddb8fc010e0f5325f9d9619a7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Run Script">db8c65aec0a8016501d00259bc7203a4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>3</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Create a shell CI</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5fff99eddb8fc010e0f5325f9d9619a7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:04:46</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>112</x>
+        <y>420</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=5fff99eddb8fc010e0f5325f9d9619a7"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>5fff99eddb8fc010e0f5325f9d9619a7</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dfff99eddb8fc010e0f5325f9d9619a7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateBrokerShellCI(current);&#13;
+} catch(ex){&#13;
+	workflow.error("HCMS RQF Workflow: Create to Shell Ci: "+ this.type+ " " +ex);&#13;
+}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>5fff99eddb8fc010e0f5325f9d9619a7</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dfff99eddb8fc010e0f5325f9d9619a7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateBrokerShellCI(current);&#13;
+} catch(ex){&#13;
+	workflow.error("HCMS RQF Workflow: Create to Shell Ci: "+ this.type+ " " +ex);&#13;
+}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Create a shell CI">5fff99eddb8fc010e0f5325f9d9619a7</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d7ff99eddb8fc010e0f5325f9d9619a8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Run Script">db8c65aec0a8016501d00259bc7203a4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>4</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Create a Standard Change Request</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5bff99eddb8fc010e0f5325f9d9619b0</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:04:50</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>560</x>
+        <y>136</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=5bff99eddb8fc010e0f5325f9d9619b0"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>5bff99eddb8fc010e0f5325f9d9619b0</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dbff99eddb8fc010e0f5325f9d9619b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateStandardChangeRequest(current);&#13;
+} catch(ex){workflow.error("Broker Provision Workflow: CreateStandardChangeRequest : " + this.type + "(" + ex.message + ")");}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>5bff99eddb8fc010e0f5325f9d9619b0</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dbff99eddb8fc010e0f5325f9d9619b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().CreateStandardChangeRequest(current);&#13;
+} catch(ex){workflow.error("Broker Provision Workflow: CreateStandardChangeRequest : " + this.type + "(" + ex.message + ")");}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Create a Standard Change Request">5bff99eddb8fc010e0f5325f9d9619b0</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619b1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="End">c7a66f7d0a0a0b3a004544a6d2f14076</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>2</databus_lookup_id>
+        <height/>
+        <input/>
+        <is_parent>false</is_parent>
+        <name>End</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>17ff99eddb8fc010e0f5325f9d9619ae</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:05:08</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width>80</width>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>991</x>
+        <y>400</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=17ff99eddb8fc010e0f5325f9d9619ae"/>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Run Script">db8c65aec0a8016501d00259bc7203a4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>9</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Set RITM as closed complete/closed incomplete</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d7ff99eddb8fc010e0f5325f9d9619ac</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:05:06</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>938</x>
+        <y>258</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=d7ff99eddb8fc010e0f5325f9d9619ac"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d7ff99eddb8fc010e0f5325f9d9619ac</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5bff99eddb8fc010e0f5325f9d9619ac</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().UpdateRequestedItem(current);&#13;
+} catch(ex){&#13;
+	workflow.error("HCMS RQF Workflow: Update Requested Item to closure: "+ this.type+ " " +ex);&#13;
+}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d7ff99eddb8fc010e0f5325f9d9619ac</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5bff99eddb8fc010e0f5325f9d9619ac</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try{&#13;
+  new HCMSWorkflowScripts().UpdateRequestedItem(current);&#13;
+} catch(ex){&#13;
+	workflow.error("HCMS RQF Workflow: Update Requested Item to closure: "+ this.type+ " " +ex);&#13;
+}</value>
+        <variable display_value="">c35ddef20a0a0ba96248a7090eccd518</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Set RITM as closed complete/closed incomplete">d7ff99eddb8fc010e0f5325f9d9619ac</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>53ff99eddb8fc010e0f5325f9d9619ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="If">98f621ca0a0a0b5900f7c291f5e45a0e</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>10</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Terminate Or Edit Request</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619a5</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:01:24</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>92</x>
+        <y>262</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=d3ff99eddb8fc010e0f5325f9d9619a5"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619a5</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff99eddb8fc010e0f5325f9d9619a5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>1</value>
+        <variable display_value="">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619a5</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>57ff99eddb8fc010e0f5325f9d9619a5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619a5</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dbff99eddb8fc010e0f5325f9d9619a5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>answer = ValidateRequestType();&#13;
+&#13;
+  function ValidateRequestType() {&#13;
+     if ( (current.request.x_ibmg3_hcms_broker_request_type == '2') || (current.request.x_ibmg3_hcms_broker_request_type == '3') ) {&#13;
+        return 'yes';&#13;
+     }&#13;
+     return 'no';&#13;
+  }&#13;
+</value>
+        <variable display_value="">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619a5</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>57ff99eddb8fc010e0f5325f9d9619a5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619a5</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff99eddb8fc010e0f5325f9d9619a5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>1</value>
+        <variable display_value="">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619a5</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dbff99eddb8fc010e0f5325f9d9619a5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>answer = ValidateRequestType();&#13;
+&#13;
+  function ValidateRequestType() {&#13;
+     if ( (current.request.x_ibmg3_hcms_broker_request_type == '2') || (current.request.x_ibmg3_hcms_broker_request_type == '3') ) {&#13;
+        return 'yes';&#13;
+     }&#13;
+     return 'no';&#13;
+  }&#13;
+</value>
+        <variable display_value="">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Terminate Or Edit Request">d3ff99eddb8fc010e0f5325f9d9619a5</activity>
+        <condition>activity.result == 'no'</condition>
+        <condition_default display_value="No">c1eff6430a0a0b59000f955abe842c94</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>No</name>
+        <order>200</order>
+        <short_description/>
+        <skip_during_generate>true</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619a6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Terminate Or Edit Request">d3ff99eddb8fc010e0f5325f9d9619a5</activity>
+        <condition>activity.result == 'yes'</condition>
+        <condition_default display_value="Yes">c1ef63200a0a0b59005ef89bae78feb7</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Yes</name>
+        <order>100</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>57ff99eddb8fc010e0f5325f9d9619a6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Wait for condition">d93a02ae0a0a0aa30077abad3fdac035</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>16</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Wait For Request Approval unhold</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619ab</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:03:47</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>16</x>
+        <y>131</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=d3ff99eddb8fc010e0f5325f9d9619ab"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619ab</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff99eddb8fc010e0f5325f9d9619ab</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">c35dc4cd0a0a0ba96248a70990c1ac54</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619ab</document_key>
+        <order>2</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>57ff99eddb8fc010e0f5325f9d9619ab</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:03:47</sys_updated_on>
+        <value>try {&#13;
+    var gr_task = new GlideRecord("sc_request");&#13;
+    gr_task.addQuery('sys_id', current.request);    &#13;
+    gr_task.query();&#13;
+    if (gr_task.next()) {&#13;
+		if(gr_task.x_ibmg3_hcms_requestapprovalhold == true){&#13;
+		answer = false;&#13;
+		}        &#13;
+		else&#13;
+			answer = true;&#13;
+    } else {&#13;
+        answer = true;&#13;
+    }&#13;
+} catch (err) {&#13;
+    workflow.info("Broker Requested Item Workflow: Wait For Approval to unhold:  " + this.type + "(" + err.message + ")");&#13;
+}</value>
+        <variable display_value="">c35debce0a0a0ba96248a709440cf31a</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619ab</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff99eddb8fc010e0f5325f9d9619ab</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">c35dc4cd0a0a0ba96248a70990c1ac54</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d3ff99eddb8fc010e0f5325f9d9619ab</document_key>
+        <order>2</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>57ff99eddb8fc010e0f5325f9d9619ab</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:03:47</sys_updated_on>
+        <value>try {&#13;
+    var gr_task = new GlideRecord("sc_request");&#13;
+    gr_task.addQuery('sys_id', current.request);    &#13;
+    gr_task.query();&#13;
+    if (gr_task.next()) {&#13;
+		if(gr_task.x_ibmg3_hcms_requestapprovalhold == true){&#13;
+		answer = false;&#13;
+		}        &#13;
+		else&#13;
+			answer = true;&#13;
+    } else {&#13;
+        answer = true;&#13;
+    }&#13;
+} catch (err) {&#13;
+    workflow.info("Broker Requested Item Workflow: Wait For Approval to unhold:  " + this.type + "(" + err.message + ")");&#13;
+}</value>
+        <variable display_value="">c35debce0a0a0ba96248a709440cf31a</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Wait For Request Approval unhold">d3ff99eddb8fc010e0f5325f9d9619ab</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>13ff99eddb8fc010e0f5325f9d9619ac</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Wait for condition">d93a02ae0a0a0aa30077abad3fdac035</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>5</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Wait For Task Completion</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage display_value="Fulfillment">5bff19eddb8fc010e0f5325f9d9619ee</stage>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>9fff99eddb8fc010e0f5325f9d9619a8</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 13:05:00</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+        <x>739</x>
+        <y>261</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=9fff99eddb8fc010e0f5325f9d9619a8"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>9fff99eddb8fc010e0f5325f9d9619a8</document_key>
+        <order>2</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>13ff99eddb8fc010e0f5325f9d9619a9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try {&#13;
+    var gr_task = new GlideRecord("sc_task");&#13;
+    gr_task.addQuery('request_item', current.sys_id);&#13;
+    gr_task.addQuery('state', '!=', '3');&#13;
+    gr_task.addQuery('state', '!=', '4');&#13;
+    gr_task.addQuery('state', '!=', '7');&#13;
+    gr_task.addQuery('wf_activity', '');&#13;
+    gr_task.query();&#13;
+    if (gr_task.next()) {&#13;
+        //tasks found in other states than 'Closed complete', 'Closed incomplete', or 'Closed Skipped'&#13;
+        answer = false;&#13;
+    } else {&#13;
+        //no tasks found in states other than 'Closed complete', 'Closed incomplete', or 'Closed Skipped'&#13;
+        answer = true;&#13;
+    }&#13;
+} catch (err) {&#13;
+    workflow.info("Broker Requested Item Workflow: Wait For Task Completion:  " + this.type + "(" + err.message + ")");&#13;
+}</value>
+        <variable display_value="">c35debce0a0a0ba96248a709440cf31a</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>9fff99eddb8fc010e0f5325f9d9619a8</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619a9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">c35dc4cd0a0a0ba96248a70990c1ac54</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>9fff99eddb8fc010e0f5325f9d9619a8</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619a9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value/>
+        <variable display_value="">c35dc4cd0a0a0ba96248a70990c1ac54</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>9fff99eddb8fc010e0f5325f9d9619a8</document_key>
+        <order>2</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>13ff99eddb8fc010e0f5325f9d9619a9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <value>try {&#13;
+    var gr_task = new GlideRecord("sc_task");&#13;
+    gr_task.addQuery('request_item', current.sys_id);&#13;
+    gr_task.addQuery('state', '!=', '3');&#13;
+    gr_task.addQuery('state', '!=', '4');&#13;
+    gr_task.addQuery('state', '!=', '7');&#13;
+    gr_task.addQuery('wf_activity', '');&#13;
+    gr_task.query();&#13;
+    if (gr_task.next()) {&#13;
+        //tasks found in other states than 'Closed complete', 'Closed incomplete', or 'Closed Skipped'&#13;
+        answer = false;&#13;
+    } else {&#13;
+        //no tasks found in states other than 'Closed complete', 'Closed incomplete', or 'Closed Skipped'&#13;
+        answer = true;&#13;
+    }&#13;
+} catch (err) {&#13;
+    workflow.info("Broker Requested Item Workflow: Wait For Task Completion:  " + this.type + "(" + err.message + ")");&#13;
+}</value>
+        <variable display_value="">c35debce0a0a0ba96248a709440cf31a</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Wait For Task Completion">9fff99eddb8fc010e0f5325f9d9619a8</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dbff99eddb8fc010e0f5325f9d9619a9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+    </wf_condition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="No">d3ff99eddb8fc010e0f5325f9d9619a6</condition>
+        <from display_value="Terminate Or Edit Request">d3ff99eddb8fc010e0f5325f9d9619a5</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>13ff99eddb8fc010e0f5325f9d9619b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Create a shell CI">5fff99eddb8fc010e0f5325f9d9619a7</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Standard">93ff99eddb8fc010e0f5325f9d9619b0</condition>
+        <from display_value="Change Type &quot;Standard/Normal&quot;">13ff99eddb8fc010e0f5325f9d9619af</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1bff99eddb8fc010e0f5325f9d9619b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Create a Standard Change Request">5bff99eddb8fc010e0f5325f9d9619b0</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">97ff99eddb8fc010e0f5325f9d9619a7</condition>
+        <from display_value="Create a Normal Change Request">1fff99eddb8fc010e0f5325f9d9619a6</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>1fff99eddb8fc010e0f5325f9d9619b2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Wait For Task Completion">9fff99eddb8fc010e0f5325f9d9619a8</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">17ff19eddb8fc010e0f5325f9d9619f0</condition>
+        <from display_value="Append Shell CI - Task_CI Table">1bff19eddb8fc010e0f5325f9d9619ef</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5bff99eddb8fc010e0f5325f9d9619b2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Change Type &quot;Standard/Normal&quot;">13ff99eddb8fc010e0f5325f9d9619af</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">1fff99eddb8fc010e0f5325f9d9619aa</condition>
+        <from display_value="Attach Existing CI To Requested Item">93ff99eddb8fc010e0f5325f9d9619aa</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>5bff99eddb8fc010e0f5325f9d9619b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Append Shell CI - Task_CI Table">5fff19eddb8fc010e0f5325f9d9619f0</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">53ff99eddb8fc010e0f5325f9d9619ad</condition>
+        <from display_value="Set RITM as closed complete/closed incomplete">d7ff99eddb8fc010e0f5325f9d9619ac</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>93ff99eddb8fc010e0f5325f9d9619b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="End">17ff99eddb8fc010e0f5325f9d9619ae</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">9fff99eddb8fc010e0f5325f9d9619ad</condition>
+        <from display_value="Begin">d7ff99eddb8fc010e0f5325f9d9619ad</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>97ff99eddb8fc010e0f5325f9d9619b2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Wait For Request Approval unhold">d3ff99eddb8fc010e0f5325f9d9619ab</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Normal">13ff99eddb8fc010e0f5325f9d9619b0</condition>
+        <from display_value="Change Type &quot;Standard/Normal&quot;">13ff99eddb8fc010e0f5325f9d9619af</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>97ff99eddb8fc010e0f5325f9d9619b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Create a Normal Change Request">1fff99eddb8fc010e0f5325f9d9619a6</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">d3ff99eddb8fc010e0f5325f9d9619b1</condition>
+        <from display_value="Create a Standard Change Request">5bff99eddb8fc010e0f5325f9d9619b0</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>97ff99eddb8fc010e0f5325f9d9619b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Wait For Task Completion">9fff99eddb8fc010e0f5325f9d9619a8</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Yes">57ff99eddb8fc010e0f5325f9d9619a6</condition>
+        <from display_value="Terminate Or Edit Request">d3ff99eddb8fc010e0f5325f9d9619a5</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>9fff99eddb8fc010e0f5325f9d9619b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Attach Existing CI To Requested Item">93ff99eddb8fc010e0f5325f9d9619aa</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">dbff99eddb8fc010e0f5325f9d9619a9</condition>
+        <from display_value="Wait For Task Completion">9fff99eddb8fc010e0f5325f9d9619a8</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619b2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Set RITM as closed complete/closed incomplete">d7ff99eddb8fc010e0f5325f9d9619ac</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">d7ff99eddb8fc010e0f5325f9d9619a8</condition>
+        <from display_value="Create a shell CI">5fff99eddb8fc010e0f5325f9d9619a7</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>d3ff99eddb8fc010e0f5325f9d9619b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Append Shell CI - Task_CI Table">1bff19eddb8fc010e0f5325f9d9619ef</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">d7ff19eddb8fc010e0f5325f9d9619f1</condition>
+        <from display_value="Append Shell CI - Task_CI Table">5fff19eddb8fc010e0f5325f9d9619f0</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dbff99eddb8fc010e0f5325f9d9619b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Change Type &quot;Standard/Normal&quot;">13ff99eddb8fc010e0f5325f9d9619af</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">13ff99eddb8fc010e0f5325f9d9619ac</condition>
+        <from display_value="Wait For Request Approval unhold">d3ff99eddb8fc010e0f5325f9d9619ab</from>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>dfff99eddb8fc010e0f5325f9d9619b2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <to display_value="Terminate Or Edit Request">d3ff99eddb8fc010e0f5325f9d9619a5</to>
+    </wf_transition>
+    <wf_estimated_runtime_config action="INSERT_OR_UPDATE">
+        <estimated_run_time/>
+        <no_of_data_points>1</no_of_data_points>
+        <percentage_threshold_ert>20</percentage_threshold_ert>
+        <sys_created_by>ashabagade</sys_created_by>
+        <sys_created_on>2020-02-18 12:57:05</sys_created_on>
+        <sys_id>9bff19eddb8fc010e0f5325f9d9619ed</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-02-18 12:57:05</sys_updated_on>
+        <workflow_version display_value="HCMS RQF Default Workflow">1bff19eddb8fc010e0f5325f9d9619ed</workflow_version>
+    </wf_estimated_runtime_config>
+    <wf_workflow_version action="update_multiple" query="workflow=0f6e7db1db6edf00e0f5325f9d96193a^sys_id!=1bff19eddb8fc010e0f5325f9d9619ed">
+        <published>false</published>
+    </wf_workflow_version>
+</record_update>

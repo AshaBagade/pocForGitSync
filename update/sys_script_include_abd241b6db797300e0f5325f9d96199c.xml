@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.PostProvisioningHookCallToBroker</api_name>
+        <client_callable>false</client_callable>
+        <description>Post Provisioning Hook</description>
+        <name>PostProvisioningHookCallToBroker</name>
+        <script><![CDATA[var PostProvisioningHookCallToBroker = Class.create();
+PostProvisioningHookCallToBroker.prototype = {
+    initialize: function() {},
+
+    postProvisionStatus: function(ritm) {
+        try {
+            //invoking rest outbound message
+            var restMessageName = gs.getProperty('x_ibmg3_hcms.Post_Provisioning _Rest_Msg');
+            var rm = new sn_ws.RESTMessageV2(restMessageName, 'postProvisioning');
+            rm.setRequestHeader("Content-Type", "application/json");
+            rm.setRequestHeader("Accept", "Application/json");
+            rm.setRequestHeader("Username", gs.getProperty('x_ibmg3_hcms.HCMS_Broker_user_name'));
+            rm.setRequestHeader("Apikey", gs.getProperty('x_ibmg3_hcms.HCMS_Broker_API_Key'));
+            //array to hold the serviceOfferingInstanceId
+            var serviceInstanceId = [];
+            serviceInstanceId.push(ritm.variables.var_service_instance_id.toString());
+
+            //variable to hold the status of ritm
+            var state, msg;
+            if (ritm.state == 3) {
+                state = "Completed";
+                msg = "Request Closed";
+            } else {
+                state = "Failed";
+                msg = "Request Cancelled or Incomplete";
+            }
+            //build request body
+            var reqbody = {
+                "serviceOfferingInstanceId": serviceInstanceId,
+                "orderNumber": ritm.request.x_ibmg3_hcms_order_number.toString(),
+                "message": msg,
+                "status": state
+            };
+            var JSONString = JSON.stringify(reqbody);
+            var EscapedJSONString = JSONString.replace(/\\n/g, "\\n")
+                .replace(/\\'/g, "\\'")
+                .replace(/\\"/g, '\\"')
+                .replace(/\\&/g, "\\&")
+                .replace(/\\r/g, "\\r")
+                .replace(/\\t/g, "\\t")
+                .replace(/\\b/g, "\\b")
+                .replace(/\\f/g, "\\f");
+
+            new HCMSLogLevel().LogMsg("info", "* Outbound Post Provisioning Hook Status to broker:* " + EscapedJSONString);
+            rm.setRequestBody(EscapedJSONString);
+            rm.setLogLevel('all');
+            //In milliseconds. Wait at most 10 seconds for response from http request.
+            rm.setHttpTimeout(10000);
+            var response = rm.execute();
+            var responseBody = response.getBody();
+            new HCMSLogLevel().LogMsg("info", "*Post Provisioning Hook Status Response body for order * "+ ritm.request.x_ibmg3_hcms_order_number + " is :" + responseBody);
+            var httpStatus = response.getStatusCode();
+            new HCMSLogLevel().LogMsg("info", "*Post Provisioning Hook Status Response from Broker status:* " + ritm.request.x_ibmg3_hcms_order_number + " is :" + httpStatus);
+			//Create record in ecc queue for unsuccessful outbound call
+            if (httpStatus > 201 || httpStatus == 0) {
+				var topic = ritm.request.x_ibmg3_hcms_order_number.toString() + "-PostProvisioning";
+				var source = ritm.getDisplayValue().toString();
+				var responsefromHost = "Response received from broker : " + responseBody + "\nResponse status code : " +  httpStatus ;
+				var ecc = new RetryOutboundcalltoBroker().eccQueueRetryRecord(topic,source,EscapedJSONString,responsefromHost);
+            }
+        } catch (e) {
+            new HCMSLogLevel().LogMsg("error", "Sending Post Provisioning Hook Status to Broker error " + e);
+        }
+    },
+
+    type: 'PostProvisioningHookCallToBroker'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>asbagad1@in.ibm.com</sys_created_by>
+        <sys_created_on>2019-06-06 08:33:18</sys_created_on>
+        <sys_id>abd241b6db797300e0f5325f9d96199c</sys_id>
+        <sys_mod_count>26</sys_mod_count>
+        <sys_name>PostProvisioningHookCallToBroker</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_abd241b6db797300e0f5325f9d96199c</sys_update_name>
+        <sys_updated_by>debada54@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2019-12-11 09:58:52</sys_updated_on>
+    </sys_script_include>
+</record_update>

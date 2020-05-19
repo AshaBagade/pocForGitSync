@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.ChangeTaskProvisioningCallToBroker</api_name>
+        <client_callable>false</client_callable>
+        <description>outbound call to send Change Task provisioning status to Enterprise Marketplace</description>
+        <name>ChangeTaskProvisioningCallToBroker</name>
+        <script><![CDATA[var ChangeTaskProvisioningCallToBroker = Class.create();
+ChangeTaskProvisioningCallToBroker.prototype = {
+    initialize: function() {},
+
+    changeTaskStatusCall: function(current, changeRequestStatus, message) {
+        try {
+            //fetch the outbound rest message name
+            var restMessageName = gs.getProperty('x_ibmg3_hcms.InitiateProvisioning_Outbound_Msg');
+            var rm = new sn_ws.RESTMessageV2(restMessageName, 'post');
+            rm.setRequestHeader("Content-Type", "application/json");
+            rm.setRequestHeader("Accept", "Application/json");
+            rm.setRequestHeader("Username", gs.getProperty('x_ibmg3_hcms.HCMS_Broker_user_name'));
+            rm.setRequestHeader("Apikey", gs.getProperty('x_ibmg3_hcms.HCMS_Broker_API_Key'));
+            var chgReq = current.change_request;
+            var ritm = new GlideRecord('sc_req_item');
+            ritm.get('x_ibmg3_hcms_related_change_request', chgReq);
+            var catTask = new GlideRecord('sc_task');
+            catTask.get('request_item', ritm.sys_id);
+            //build the payload
+            var reqbody = {
+                "orderNumber": ritm.variables.order_number.toString(),
+                "serviceInstanceId": ritm.variables.var_service_instance_id.toString(),
+                "taskId": catTask.number.toString(),
+                "changeTaskId": current.number.toString(),
+                "changeRequestStatus": changeRequestStatus,
+                "message": message
+            };
+            var myJSONString = JSON.stringify(reqbody);
+            var myEscapedJSONString = myJSONString.replace(/\\n/g, "\\n")
+                .replace(/\\'/g, "\\'")
+                .replace(/\\"/g, '\\"')
+                .replace(/\\&/g, "\\&")
+                .replace(/\\r/g, "\\r")
+                .replace(/\\t/g, "\\t")
+                .replace(/\\b/g, "\\b")
+                .replace(/\\f/g, "\\f");
+
+            new HCMSLogLevel().LogMsg("info", "* Outbound Change Task Provisioning Status to EnterPrise Marketplace for order " + ritm.variables.order_number + " : * " + myEscapedJSONString);
+            rm.setRequestBody(myEscapedJSONString);
+            //In milliseconds. Wait at most 10 seconds for response from http request.
+            rm.setLogLevel('all');
+            //In milliseconds. Wait at most 10 seconds for response from http request.
+            rm.setHttpTimeout(10000);
+            var response = rm.execute();
+            var responseBody = response.getBody();
+            new HCMSLogLevel().LogMsg("info", "*Change Task Provisioning Status Response body for order " + ritm.variables.order_number + " : * " + responseBody);
+            var httpStatus = response.getStatusCode();
+            new HCMSLogLevel().LogMsg("info", "*Change Task Provisioning Status Response from EnterPrise Marketplace status for order " + ritm.variables.order_number + " : * " + httpStatus);
+            //Create record in ecc queue for unsuccessful outbound call
+            if (httpStatus > 201 || httpStatus == 0) {
+                var topic = ritm.request.x_ibmg3_hcms_order_number.toString() + "-PreProvisioning";
+                var source = ritm.getDisplayValue().toString();
+                var responsefromHost = "Response received from broker : " + responseBody + "\nResponse status code : " + httpStatus;
+                var ecc = new RetryOutboundcalltoBroker().eccQueueRetryRecord(topic, source, myEscapedJSONString, responsefromHost);
+            }
+        } catch (ex) {
+            new HCMSLogLevel().LogMsg("error", "Sending Change Task Status to EnterPrise Marketplace error " + ex);
+        }
+    },
+    type: 'ChangeTaskProvisioningCallToBroker'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>asbagad1@in.ibm.com</sys_created_by>
+        <sys_created_on>2019-04-02 07:09:01</sys_created_on>
+        <sys_id>c38d2d7ddb28770037ad349f9d96192b</sys_id>
+        <sys_mod_count>63</sys_mod_count>
+        <sys_name>ChangeTaskProvisioningCallToBroker</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_c38d2d7ddb28770037ad349f9d96192b</sys_update_name>
+        <sys_updated_by>nmandya1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2020-05-13 09:37:34</sys_updated_on>
+    </sys_script_include>
+</record_update>

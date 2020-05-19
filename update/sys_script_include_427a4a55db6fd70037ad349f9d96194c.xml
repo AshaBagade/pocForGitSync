@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.HCMSWorkflowScripts</api_name>
+        <client_callable>false</client_callable>
+        <description>This script include contains all the Individual fucnctions from the default requested item workflow&#13;
+</description>
+        <name>HCMSWorkflowScripts</name>
+        <script><![CDATA[var HCMSWorkflowScripts = Class.create();
+HCMSWorkflowScripts.prototype = {
+    initialize: function() {},
+
+
+    //***************** CREATE BROKER SHELL CI ************************
+    CreateBrokerShellCI: function(current) {
+        try {
+            var gr = new GlideRecord('x_ibmg3_hcms_cmdb_ci_mcms');
+            gr.initialize();
+            var req_val;
+            gr.name = "VRI - Cloud Broker CI " + current.number;
+            gr.instance_id = current.variables.var_service_name;
+            gr.correlation_id = current.variables.var_service_instance_id;
+            var numb = current.number;
+            var sfg = new GlideRecord('sc_req_item');
+            sfg.addQuery('number=' + numb);
+            sfg.query();
+            if (sfg.next()) {
+                req_val = sfg.request.x_ibmg3_hcms_broker_approval_request_json;
+            }
+            var sc_parser = JSON.parse(req_val);
+            var environ_val = '';
+            if (sc_parser.context.environment)
+                environ_val = sc_parser.context.environment.toString();
+            if (environ_val) {
+                if (environ_val == 'Development') {
+                    gr.environment = 'development';
+                }
+                if (environ_val == 'Production') {
+                    gr.environment = 'production';
+                }
+                if (environ_val == 'QA') {
+                    gr.environment = 'qa';
+                }
+                if (environ_val == 'Staging') {
+                    gr.environment = 'staging';
+                }
+                if (environ_val == 'Demonstration') {
+                    gr.environment = 'demonstration';
+                }
+                if (environ_val == 'Test') {
+                    gr.environment = 'test';
+                }
+                if (environ_val == 'Training') {
+                    gr.environment = 'training';
+                }
+                if (environ_val == 'Disasterrecovery') {
+                    gr.environment = 'disaster';
+                }
+                //var grp_val = sc_parser.context.team.toString();
+            }
+            gr.assignment_group = this.getGroupId(sc_parser.context.team.toString(), current.request.x_ibmg3_hcms_order_number);
+            var currentCI = gr.insert();
+            current.configuration_item = currentCI;
+			gr.install_status = 4;//status set to pending install
+            workflow.scratchpad.tsk_relation_ci = currentCI;
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Build Create Broker Shell Summary: " + this.type + "(" + err.message + ")");
+        }
+    },
+
+    getGroupId: function(teamName, orderNumber) {
+        try {
+
+            var grp = new GlideRecord('sys_user_group');
+            if (grp.get('name', teamName))
+                return grp.sys_id;
+            else
+                new HCMSLogLevel().LogMsg("info", "Invalid Assignment Group: " + teamName + " for " + orderNumber);
+        } catch (e) {
+            workflow.error("Broker Provision Workflow: get assignment group id: " + this.type + "(" + e.message + ")");
+        }
+    },
+
+    //***************** RETIRE BROKER SHELL CI ************************
+    RetireBrokerShellCI: function(current) {
+        try {
+            var gr = new GlideRecord('x_ibmg3_hcms_cmdb_ci_mcms');
+            gr.addQuery('correlation_id', current.variables.var_service_instance_id);
+            gr.query();
+            if (gr.next()) {
+                var currentCI = gr.sys_id;
+                current.configuration_item = currentCI;
+            }
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Retire Broker Shell : " + this.type + "(" + err.message + ")");
+        }
+    },
+
+
+    //******************* CREATE STANDARD/NORMAL CHANGE REQUEST ************************
+
+    CreateStandardChangeRequest: function(current) {
+        var gr = new GlideRecord('change_request');
+        gr.initialize();
+        gr.type = "standard";
+        gr.short_description = "Standard change for cloud provisioning from Broker ";
+        gr.description = "Standard change for cloud as part of requested Item: ";
+        gr.cmdb_ci = current.configuration_item;
+        //gr.state = -1;//OOB state
+        gr.category = 'cloud_services';
+		gr.requested_by  = new generateSingleCart().getRequestedFor(current.variables.var_requested_for);
+        var changeSysID = gr.insert();
+        updateChangeRecord(changeSysID);
+        var chgtask = this.createChangeTask(gr);
+
+        function updateChangeRecord(reqSysID) {
+            var changeGR = new GlideRecord('change_request');
+            changeGR.addQuery('sys_id', reqSysID);
+            changeGR.query();
+            if (changeGR.next()) {
+                current.x_ibmg3_hcms_related_change_request.setDisplayValue(changeGR.number);
+                current.update();
+            }
+
+            new HCMSLogLevel().LogMsg("info", "CreateStandardChangeRequest:" + changeSysID);
+        }
+    },
+
+    CreateNormalChangeRequest: function(current) {
+        var gr = new GlideRecord('change_request');
+        gr.initialize();
+        gr.type = "normal";
+        gr.short_description = "Normal change for cloud provisioning from Broker ";
+        gr.description = "Normal change for cloud as part of requested Item: ";
+        gr.cmdb_ci = current.configuration_item;
+        //gr.state = -2;//OOB state
+        gr.category = 'cloud_services';
+		gr.requested_by  = new generateSingleCart().getRequestedFor(current.variables.var_requested_for);
+        var changeSysID = gr.insert();
+        updateChangeRecord(changeSysID);
+        var chgtask = this.createChangeTask(gr);
+
+        function updateChangeRecord(chgID) {
+            var changeGR = new GlideRecord('change_request');
+            changeGR.addQuery('sys_id', chgID);
+            changeGR.query();
+            if (changeGR.next()) {
+                current.x_ibmg3_hcms_related_change_request.setDisplayValue(changeGR.number);
+                current.update();
+            }
+            new HCMSLogLevel().LogMsg("info", "Normal Change Request created:" + changeGR.number + "for order " + current.request.x_ibmg3_hcms_order_number);
+        }
+    },
+
+    //************Create Change Task************
+    createChangeTask: function(change) {
+        try {
+            //Fetch cloud group and user of the grp
+            var assgnGrp = gs.getProperty('x_ibmg3_hcms.MCMP_cloud.assignment_group');
+            var assgnTo = gs.getProperty('x_ibmg3_hcms.MCMP_cloud.assigned_to');
+            var tsk = new GlideRecord('change_task');
+            tsk.initialize();
+            tsk.change_request = change.sys_id;
+            tsk.short_description = "Provisioning Task";
+            tsk.assignment_group.setDisplayValue(assgnGrp);
+            tsk.assigned_to.setDisplayValue(assgnTo);
+            tsk.cmdb_ci = change.cmdb_ci;
+            var chgtsk = tsk.insert();
+            return chgtsk;
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Creation of Change : " + this.type + "(" + err.message + ")");
+        }
+    },
+
+    //*******  Update Requested Item to Closed / Closed Complete ***************
+
+    UpdateRequestedItem: function(current) {
+        try {
+            var gr_task = new GlideRecord("sc_task");
+            gr_task.addQuery('request_item', current.sys_id);
+            gr_task.query();
+            while (gr_task.next()) {
+                // check if state of the task is closed incomplete
+                if (gr_task.state == 4) {
+                    new HCMSLogLevel().LogMsg("info", "RITM NUMber:" + current.number + " Task number: " + gr_task.number + "Task state:" + gr_task.state);
+                    current.state = 4;
+					current.update();
+                } else if (gr_task.state == 3) {
+                    new HCMSLogLevel().LogMsg("info", "RITM NUMber:" + current.number + " Task number: " + gr_task.number + "Task state:" + gr_task.state);
+                    current.state = 3;
+					current.update();
+                }
+            }
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Update RequestedItesms Script Include  : " + this.type + "(" + err.message + ")");
+        }
+    },
+
+
+
+    //***********  Close Related Change Request **************************
+
+    CloseRelatedChange: function(current) {
+        try {
+            var catalogItemName = gs.getProperty('x_ibmg3_hcms.HCMS_Catalog_Item_Name');
+            var rfc_id;
+            var rfc_item;
+            var rfc = new GlideRecord('sc_req_item');
+            rfc.addQuery('request.sys_id=' + current.sys_id);
+            rfc.query();
+            if (rfc.next()) {
+                rfc_id = rfc.x_ibmg3_hcms_related_change_request;
+                rfc_item = rfc.cat_item.name;
+            }
+
+            if (rfc_item == catalogItemName) {
+                var rfc_change = new GlideRecord('change_request');
+                rfc_change.addQuery('sys_id', rfc_id);
+                rfc_change.addActiveQuery();
+                rfc_change.query();
+                if (rfc_change.next()) {
+                    rfc_change.state = '0'; // closed state
+                    rfc_change.close_code = 'successful';
+                    //current.stage = "complete";
+                    rfc_change.update();
+                }
+            }
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Close Related Change Script Include  : " + this.type + "(" + err.message + ")");
+        }
+    },
+
+
+
+    //*************** Cancel Related Change Request **********************
+    CancelRelatedChange: function(current) {
+        try {
+            //current.stage = "complete";	
+            var catalogItemName = gs.getProperty('x_ibmg3_hcms.HCMS_Catalog_Item_Name');
+            var rfc_id;
+            var rfc_item;
+            var rfc = new GlideRecord('sc_req_item');
+            rfc.addQuery('request.sys_id=' + current.sys_id);
+            rfc.query();
+            if (rfc.next()) {
+                rfc_id = rfc.x_ibmg3_hcms_related_change_request;
+                rfc_item = rfc.cat_item.name;
+            }
+            if (rfc_item == catalogItemName) {
+                var rfc_change = new GlideRecord('change_request');
+                rfc_change.addQuery('sys_id', rfc_id);
+                rfc_change.addActiveQuery();
+                rfc_change.query();
+                if (rfc_change.next()) {
+                    rfc_change.close_code = 'unsuccessful';
+                    rfc_change.state = '4';
+                    rfc_change.update();
+                }
+            }
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Cancel Related Change Script Include  : " + this.type + "(" + err.message + ")");
+        }
+    },
+
+    //******************** Attach Shell CI - Task_CI Table**************
+
+    CreateTaskCIRecord: function(current) {
+        try {
+            var tsk_ci = new GlideRecord('sc_task');
+            tsk_ci.addQuery('request_item.number=' + current.number);
+            tsk_ci.query();
+            if (tsk_ci.next()) {
+                tsk_ci.cmdb_ci = current.configuration_item;
+                tsk_ci.update();
+            }
+            new HCMSLogLevel().LogMsg('info', 'ServiceInstance CI linked to Catalog Task for order ' + current.request.x_ibmg3_hcms_order_number);
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Create Task Record in Task_CI  Script Include  : " + this.type + "(" + err.message + ")");
+        }
+    },
+
+    //*************Close/cancel Request******************
+
+    close_CancelRequest: function(current) {
+        try {
+            //varibles to hold the completion status
+            var failed = '';
+            var completed = '';
+            var chgRejected = '';
+            var relatedRitm = new GlideRecord('sc_req_item');
+            relatedRitm.addQuery('request', current.sys_id);
+            relatedRitm.query();
+            while (relatedRitm.next()) {
+                if (relatedRitm.state == '4') {
+                    failed = true;
+                } else
+                    completed = true;
+                //the below code is added for the use case when SR approval is driven only by request and not chg and one of the chg req is rejected the SR state should be closed incomplete
+                var app = new GlideRecord('sysapproval_approver');
+                app.addQuery('sysapproval', relatedRitm.x_ibmg3_hcms_related_change_request);
+                app.query();
+                while (app.next()) {
+                    if (app.state == 'rejected')
+                        chgRejected = true;
+                }
+            }
+            if (failed && !completed && !chgRejected)
+                current.request_state = 'closed_cancelled'; // if all ritms are failed
+            else
+                current.request_state = 'closed_incomplete'; // if combination of failure and success 
+            //set stage to incomplete
+            current.stage = 'closed_incomplete';
+            new HCMSLogLevel().LogMsg('info', 'Request cancelled for order : ' + current.x_ibmg3_hcms_order_number);
+        } catch (ex) {
+            new HCMSLogLevel().LogMsg("error", " error while cancelling the Request for order " + current.x_ibmg3_hcms_order_number + " : " + ex);
+        }
+    },
+
+    type: 'HCMSWorkflowScripts'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>rannep12@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-07-26 05:31:30</sys_created_on>
+        <sys_id>427a4a55db6fd70037ad349f9d96194c</sys_id>
+        <sys_mod_count>102</sys_mod_count>
+        <sys_name>HCMSWorkflowScripts</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_427a4a55db6fd70037ad349f9d96194c</sys_update_name>
+        <sys_updated_by>asbagad1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2020-04-17 05:39:55</sys_updated_on>
+    </sys_script_include>
+</record_update>

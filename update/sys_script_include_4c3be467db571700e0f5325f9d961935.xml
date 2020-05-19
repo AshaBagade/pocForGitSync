@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.HCMSCreateTasksRequestedItems</api_name>
+        <client_callable>false</client_callable>
+        <description>This script include creates Tasks for the Requested Items created from broker</description>
+        <name>HCMSCreateTasksRequestedItems</name>
+        <script><![CDATA[var HCMSCreateTasksRequestedItems = Class.create();
+HCMSCreateTasksRequestedItems.prototype = {
+	initialize: function() {
+	},
+	
+	createBrokerTasks: function(current){
+		
+		try {			
+			//Create the task record for all requested items in the requested item array
+			new HCMSLogLevel().LogMsg("info", "*Creating Tasks - Order number is: " + current.x_ibmg3_hcms_order_number);
+			var reqItemGR = new GlideRecord('sc_req_item');
+			reqItemGR.addQuery('request.number', current.number);
+			reqItemGR.query();
+			while(reqItemGR.next()) {
+				var gr = new GlideRecord('sc_task');
+				gr.initialize();
+				gr.request_item.setDisplayValue(reqItemGR.number);
+				gr.insert();		
+			}
+			
+		}catch(ex){
+			workflow.error("Broker Provision Workflow: Create Tasks for Requested Items: " + this.type + "(" + err.message + ")" );
+		}
+		
+	},
+	
+	
+	type: 'HCMSCreateTasksRequestedItems'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>rannep12@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-07-20 12:12:10</sys_created_on>
+        <sys_id>4c3be467db571700e0f5325f9d961935</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>HCMSCreateTasksRequestedItems</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_4c3be467db571700e0f5325f9d961935</sys_update_name>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2019-10-30 11:46:12</sys_updated_on>
+    </sys_script_include>
+</record_update>

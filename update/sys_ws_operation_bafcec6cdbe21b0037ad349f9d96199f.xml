@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri>/api/x_ibmg3_hcms/brokerrequest</default_operation_uri>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>approvalrequest</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+	
+	try {
+		//Defining variables
+		var body = request.body.data,
+		requestType, approvalType, approvalStatus, stateStatus, cancelAction, requestedFor, requestedFor_returned, requestorName, requestNumber, requestUpdateTS, requestSysID, requestedForUser, requestor;
+		
+		//Obtain header Information
+		var brokerLocation = request.getHeader('icb_brokerLocation');
+		var catalogItemSysID = request.getHeader('bbd_catalog_item_sys_id');
+		var serviceRequestedForUser = body.requested_for;
+		
+		var strShortDescription = body.special_instructions.orderPurpose;
+		var strDescription = body.special_instructions.detailedComments;
+		
+		//Track the order number
+		var orderNumber = body.special_instructions.orderNumber;
+		var orderSubmittedDate = body.special_instructions.orderSubmittedTime;
+		
+		//Establish a variable to hold the response body
+		var requestSystemid;
+		var responseBody = {};
+			
+			//Set a variable to establish a baseline for the validation check
+			var validationError = "false";
+			validateBaseElements(body);
+			
+			//Setting variable values from the request object
+			requestedFor = body.requested_for;
+			requestType = body.special_instructions.requestType;
+			//Convert the requestType to the appropriate integer value for workflow processing
+			//Test for validation error and  skip switch statement if true
+			if(validationError == "false") {
+				//If requestType is not one of New, Change or Terminate - throw an error as an invalid request
+				switch(requestType) {
+					case 'New':
+					var str = JSON.stringify(body);
+					try{
+						requestSystemid  = new generateSingleCart().processRequest(str,brokerLocation,requestedFor);
+					} catch(ex){}
+						
+						//Set the response body
+						responseBody.requestNumber = requestSystemid;
+						response.setBody(responseBody);
+						break;
+						
+						case 'Change':
+						//***** Create Change Request *******
+						//Create the request record
+						var grC = new GlideRecord('change_request');
+						grC.initialize();
+						grC.u_requested_for = requestedFor;
+						grC.type = "cloud_broker";
+						//See if opened_by is autopopulated by web service userID
+						//grC.opened_by = "0700551"; //*** Need to extract from authentication request
+						grC.category = "System Software";
+						grC.reason = "User requested";
+						//grC.u_change_environment = "Other";
+						grC.u_details = "Cloud";
+						grC.setValue("u_broker_approval_request_type", 1);
+						grC.requested_by = requestedFor;
+						grC.category = "cloud_services";
+						grC.reason = "dynamic_provisioning_deprovisioning";
+						
+						//Store request JSON in request record as a JSON string
+						var strC = JSON.stringify(body);
+						grC.u_broker_approval_change_request_json = strC;
+						
+						//Insert the record and get the record sys_id
+						requestSysID = grC.insert();
+						
+						//Log the incoming request payload
+						gs.info("API - Cloud Broker Change Provision Request Payload: " + strC);
+						
+						//Retrieve values for the record just created
+						var grC1 = new GlideRecord('change_request');
+						grC1.get(requestSysID);
+						
+						//Populate the values for the response fields
+						requestNumber =  grC1.number.toString();
+						requestUpdateTS = grC1.opened_at.toString();
+						requestedFor_returned = grC1.requested_by;
+						
+						//Update the workflow with input/scratchpad values
+						var workflowContextChange = new Workflow().getRunningFlows(grC1);
+						while(workflowContextChange.next()){
+							
+							//Test Logging
+							//gs.info("(0 - API) Change Workflow name: " + workflowContextChange.name);
+							//gs.info("(1 - API) Change Workflow id: " + workflowContextChange.id);
+							
+							//Create scratchpad variables with values in the workflow context
+							workflowContextChange.scratchpad.brokerPlatformLocation = brokerLocation;
+							workflowContextChange.update();
+						}
+						
+						//Convert requested_for sys_id to userID (name)
+						requestedForUser = gs.getUser();
+						requestor = requestedForUser.getUserByID(requestedFor_returned);
+						requestorName = requestor.name;
+						
+						//Populate the response body
+						responseBody.requested_for = requestorName;
+						responseBody.sys_updated_on = requestUpdateTS;
+						responseBody.requestNumber = requestNumber;
+						
+						//Set the response body
+						response.setBody(responseBody);
+						
+						//Log the body of the outgoing API response
+						var strChangeResponse = JSON.stringify(responseBody);
+						gs.info("API - Cloud Broker Change Response Payload: " + strChangeResponse);
+						
+						break;
+						
+						
+						case 'Terminate':
+						
+						str = JSON.stringify(body);
+						try{
+							requestSystemid  = new generateSingleCart().processRequest(str,brokerLocation,requestedFor);
+						} catch(ex){}
+							
+							responseBody.requestNumber = requestSystemid;
+							response.setBody(responseBody);
+							break;
+							
+							case 'Cancel':
+							
+							//Extract Values from the request
+							var cancelRequestNumber = body.special_instructions.requestNumber;
+							//Define a variable to hold reason for cancellation failures
+							var failedReason = "";
+							//Variable to hold the sys_id of the retrieved request record
+							var grSys_id;
+							//var finalApprovalStatus;
+							requestNumber = cancelRequestNumber;
+							
+							//Log the incoming request payload
+							var strCancelRequest = JSON.stringify(body);
+							gs.info("API - Cloud Broker Cancel Request Payload: " + strCancelRequest);
+							
+							//Determine the approval type of cancel request, REQ or CHG
+							approvalType = cancelRequestNumber.substring(0,3);
+							
+							if (approvalType == 'REQ'){
+								
+								//Determine approval status for the REQ number
+								//Retrieve values for the record just created
+								var reqCount = 0;
+								var grREQ = new GlideRecord('sc_request');
+								grREQ.addQuery('number', cancelRequestNumber);
+								grREQ.query();
+								while(grREQ.next()) {
+									
+									//Set the value of the approval status from the requested REQ record
+									approvalStatus = grREQ.approval.toString();
+									
+									//Set the value of the request_state from the requested REQ record
+									stateStatus = grREQ.request_state.toString();
+									
+									//Store the sys_id for this change record for later use below in this if statement
+									grSys_id = grREQ.sys_id;
+									
+									//Get the time stamp
+									requestUpdateTS = grREQ.sys_updated_on.toString();
+									
+									//Increment the found record count
+									reqCount = reqCount+1;
+								}//end while
+								
+								//Test to validate that the request record was found
+								if(reqCount == 1){
+									
+									
+									//Test for approved or rejected
+									if (approvalStatus == "approved" || approvalStatus == "rejected"){
+										
+										//Set the action to failed request
+										cancelAction = "Request for Cancel is failed";
+										//populate remaining response values
+										
+										//Identify the reason for the cancel request failure for approved requests
+										if(approvalStatus == "approved"){
+											
+											//Based on the value of the request_state field
+											//Refine the value for the failedReason response payload attribute
+											switch(stateStatus) {
+												case 'in_process':
+												failedReason = "Already Approved";
+												break;
+												
+												case 'closed_complete':
+												failedReason = "Already Approved and Completed";
+												break;
+												
+												default:
+												failedReason = "Already Approved";
+											}//end switch
+										}//end approved
+										
+										//Identify the reason for the cancel request failure for rejected requests
+										else if(approvalStatus == "rejected"){
+											
+											//Based on the value of the request_state field
+											//Refine the value for the failedReason response payload attribute
+											switch(stateStatus) {
+												case 'closed_rejected':
+												failedReason = "Already Rejected";
+												break;
+												
+												default:
+												failedReason = "Already Rejected";
+											}//end switch
+										}//end rejected
+										else {
+											
+											//set the reason to Already Rejected
+											failedReason = "Cancellation Error";
+										}
+										
+									}//end approved or rejected
+									else if(approvalStatus == "not requested"){
+										
+										//Identify the reason for the cancel request failure for approved requests
+										if(stateStatus == "closed_cancelled"){
+											
+											//Set the action to failed request
+											cancelAction = "Request for Cancel is failed";
+											
+											//Based on the value of the request_state being closed cancelled
+											//Refine the value for the failedReason response payload attribute
+											failedReason = "Already Cancelled";
+											
+										}//end closed cancelled
+										else{
+											
+											//Retrieve the service request record in context
+											var grREQ1 = new GlideRecord('sc_request');
+											grREQ1.get(grSys_id);
+											
+											//cancel the "New" approval request and set state to "Closed Cancelled"
+											grREQ1.setValue("request_state", "closed_cancelled");
+											//Update the record
+											grREQ1.update();
+											
+											//Retrieve the service request record again after setting state first time
+											//This is not a duplicate, first state setting effects RITMS
+											//Second state setting finalizes the cancellation state
+											var grREQ2 = new GlideRecord('sc_request');
+											grREQ2.get(grSys_id);
+											
+											//cancel the "New" approval request and again set state to "Closed Cancelled"
+											grREQ2.setValue("request_state", "closed_cancelled");
+											//Update the record
+											grREQ2.update();
+											
+											//Obtain the newly updated time stamp
+											var grREQ3 = new GlideRecord('sc_request');
+											grREQ3.get(grSys_id);
+											requestUpdateTS = grREQ3.sys_updated_on.toString();
+											
+											//Set the value for the "action" attribute
+											cancelAction = "Request for Cancel is successful";
+											
+										}//end else
+									}//end not requested
+									
+								} //end if validation of found record - record found
+								
+								else{
+									
+									//Set the value for the cancel request action
+									cancelAction = "Request for Cancel is failed";
+									
+									//Set the reason for the cancellation request failure
+									failedReason = "Record Not Found";
+									
+								}// end else validation of found record - record not found
+								
+								
+							}//end REQ
+							
+							else if(approvalType == 'CHG'){
+								
+								var chgCount = 0;
+								var grCHG = new GlideRecord('change_request');
+								grCHG.addQuery('number', cancelRequestNumber);
+								grCHG.query();
+								while(grCHG.next()) {
+									
+									//Set the value of the approval status from the requested REQ record
+									approvalStatus = grCHG.approval.toString();
+									
+									//Set the value of the request_state from the requested REQ record
+									stateStatus = grCHG.state.toString();
+									
+									//Store the sys_id for this change record for later use below
+									grSys_id = grCHG.sys_id;
+									
+									//Get the time stamp
+									requestUpdateTS = grCHG.sys_updated_on.toString();
+									
+									//Increment the found record count
+									chgCount = chgCount + 1;
+									
+								}// end while
+								
+								//Test to validate that the request record was found
+								if(chgCount == 1){
+									
+									//Test for approved or rejected
+									if (approvalStatus == "approved" || approvalStatus == "rejected"){
+										
+										cancelAction = "Request for Cancel is failed";
+										//populate remaining response values
+										
+										//Identify the reason for the cancel request failure for approved requests
+										if(approvalStatus == "approved"){
+											
+											//Based on the value of the _state field
+											//Refine the value for the failedReason response payload attribute
+											switch(stateStatus) {
+												case '2': //Work In Progress
+												failedReason = "Already Approved";
+												break;
+												
+												case '3': //Successful Change
+												failedReason = "Already Approved and Completed";
+												break;
+												
+												default:
+												failedReason = "Already Approved";
+											}//end switch
+										}//end approved
+										
+										//Identify the reason for the cancel request failure for rejected requests
+										else if(approvalStatus == "rejected"){
+											
+											//Based on the value of the request_state field
+											//Refine the value for the failedReason response payload attribute
+											switch(stateStatus) {
+												case '9': //Change Rejected
+												failedReason = "Already Rejected";
+												break;
+												
+												default:
+												failedReason = "Already Rejected";
+											}//end switch
+										}//end rejected
+										else {
+											
+											//set the reason to Already Rejected
+											failedReason = "Cancellation Error";
+										}
+										
+									}
+									else if(approvalStatus == "not requested" || approvalStatus == "Requested"){
+										
+										
+										//Identify the reason for the cancel request failure for approved requests
+										if(stateStatus == "8"){  //Change Cancelled
+											
+											//Set the action to failed request
+											cancelAction = "Request for Cancel is failed";
+											
+											//Based on the value of the request_state being closed cancelled
+											//Refine the value for the failedReason response payload attribute
+											failedReason = "Already Cancelled";
+											
+										}//end closed cancelled
+										else{
+											
+											//Retrieve the change request record in context
+											var grCHG1 = new GlideRecord('change_request');
+											grCHG1.get(grSys_id);
+											
+											//cancel the "Change" approval request and set state to "Change Cancelled"
+											grCHG1.setValue("state", 8);
+											//Update the record
+											grCHG1.update();
+											
+											//Obtain the updated time stamp
+											var grCHG2 = new GlideRecord('change_request');
+											grCHG2.get(grSys_id);
+											requestUpdateTS = grCHG2.sys_updated_on.toString();
+											//finalApprovalStatus = grCHG2.approval;
+											
+											//Set the value for the "action" attribute
+											cancelAction = "Request for Cancel is successful";
+											
+										}// end else
+										
+									}// end requested/not requested
+									
+								}//end if validation of found record - record found
+								
+								else{
+									
+									//Set the value for the cancel request action
+									cancelAction = "Request for Cancel is failed";
+									
+									//Set the reason for the cancellation request failure
+									failedReason = "Record Not Found";
+									
+								}// end else validation of found record - record not found
+								
+							} // end CHG
+							else {
+								
+								//if the request number does not begin with either REQ or CHG, then raise an error
+								raiseResponseError("requestNumber attribute malformed" + approvalType);
+							}
+							
+							//Populate the response body
+							//General Responses
+							responseBody.requested_for = requestedFor;
+							responseBody.sys_updated_on = requestUpdateTS;
+							responseBody.requestNumber = requestNumber;
+							
+							//Responses Specific to Cancel
+							responseBody.action = cancelAction;
+							responseBody.failed_reason = failedReason;
+							responseBody.requestType = "Cancel";
+							responseBody.approvalStatus = approvalStatus;
+							responseBody.orderNumber = orderNumber;
+							
+							//Log the body of the outgoing API response
+							var strCancelResponse = JSON.stringify(responseBody);
+							gs.info("aAPI - Cloud Broker Cancel Response Payload: " + strCancelResponse);
+							//gs.info(responseBody);
+							
+							//Set the response body
+							response.setBody(responseBody);
+							
+							break;
+							
+							default:
+							raiseResponseError("requestType attribute");
+							//responseBuilder.setError(new sn_ws_err.NotFoundError()); //Constructor parameter is optional
+						}
+					}//end if validationError
+					
+					return {
+						
+						//response body already defined and added to the response object
+						
+					};
+					
+				}
+				catch(err) {
+					gs.info("Broker Approval API: " + this.type + "(" + err.message + ")" );
+				}
+				
+				
+				//********* VALIDATION FUNCTIONS  ************
+				//Function to validate the base level elements
+				function validateBaseElements(bBody){
+					
+					//catalog_item_name
+					if (!bBody.catalog_item_name){
+						validationError = "true";
+						raiseResponseError("catalog_item_sys_id attribute missing");
+					}
+					if (empty(bBody.catalog_item_name)){
+						validationError = "true";
+						raiseResponseError("catalog_item_name attribute bad value");
+					}
+					
+					//requested_for
+					if (!bBody.requested_for){
+						validationError = "true";
+						raiseResponseError("requested_for attribute missing");
+					}
+					if (empty(bBody.requested_for)){
+						validationError = "true";
+						raiseResponseError("requested_for attribute bad value");
+					}
+					
+					//orderNumber
+					if (!bBody.special_instructions.orderNumber){
+						validationError = "true";
+						raiseResponseError("orderNumber attribute missing");
+					}
+					if (empty(bBody.special_instructions.orderNumber)){
+						validationError = "true";
+						raiseResponseError("orderNumber attribute bad value");
+					}
+					
+					//requestType
+					if (!bBody.special_instructions.requestType){
+						validationError = "true";
+						raiseResponseError("requestType attribute missing");
+					}
+					if (empty(bBody.special_instructions.requestType)){
+						validationError = "true";
+						raiseResponseError("requestType attribute bad value");
+					}
+					
+					if (bBody.special_instructions.requestType == "New"){
+						
+						var payloadQuantity = bBody.special_instructions.requestedItems[0].requestedItem.quantity;
+						var intQuantity = parseInt(payloadQuantity, 10);
+						
+						if (intQuantity < 1){
+							validationError = "true";
+							raiseResponseError("quantity attribute less than one");
+						}// end intQuantity
+					}//end New
+					
+					if (bBody.special_instructions.requestType == "Cancel"){
+						
+						//requestNumber
+						if (!bBody.special_instructions.requestNumber){
+							validationError = "true";
+							raiseResponseError("requestNumber attribute missing");
+						}
+						if (empty(bBody.special_instructions.requestNumber)){
+							validationError = "true";
+							raiseResponseError("requestNumber attribute bad value");
+						}
+						
+					}//end Cancel
+				}
+				
+				//Function to handle string tests
+				function empty(e) {
+					
+					//Test the string
+					switch (e) {
+						case "":
+						return true;
+						case 0:
+						return true;
+						case "0":
+						return true;
+						case null:
+						return true;
+						//case false:
+						case typeof this == "undefined":
+						return true;
+						default:
+						return false;
+					}
+					
+				}
+				
+				//Function to handle response error messages
+				function raiseResponseError(message) {
+					
+					//Raises a response error
+					var theError = new sn_ws_err.ServiceError();
+					theError.setStatus(403);
+					theError.setMessage("JSON payload error.");
+					theError.setDetail(message);
+					response.setError(theError);
+					
+					//Log the error on processing the request
+					gs.info("BROKER APPROVAL REQUEST: ERROR: JSON payload error.");
+					gs.info("BROKER APPROVAL REQUEST: ERROR: " + message);
+					
+				}
+				
+				
+			})(request, response);]]></operation_script>
+        <operation_uri>/api/x_ibmg3_hcms/v1/brokerrequest</operation_uri>
+        <produces>application/json</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>false</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-03 21:36:29</sys_created_on>
+        <sys_id>bafcec6cdbe21b0037ad349f9d96199f</sys_id>
+        <sys_mod_count>180</sys_mod_count>
+        <sys_name>approvalrequest</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_ws_operation_bafcec6cdbe21b0037ad349f9d96199f</sys_update_name>
+        <sys_updated_by>rannep12@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-07-24 06:31:29</sys_updated_on>
+        <web_service_definition display_value="HCMS BrokerRequest_notused">585c282cdbe21b0037ad349f9d9619b1</web_service_definition>
+        <web_service_version display_value="v1">e8dda4acdbe21b0037ad349f9d9619b5</web_service_version>
+    </sys_ws_operation>
+</record_update>

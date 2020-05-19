@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>false</conditional>
+        <name>IBM MCMP Auto Retry Mechanism</name>
+        <run_as display_value="Debashish Das">7fb8a7c0db700010c9b7e4da4b96195e</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period>1970-01-01 00:10:00</run_period>
+        <run_start>2019-11-19 12:17:41</run_start>
+        <run_time>1970-01-01 08:01:00</run_time>
+        <run_type>periodically</run_type>
+        <script><![CDATA[//Picks the IBM Integrations records which are in ready state and retries the outbound call
+var gr = new GlideRecord('ecc_queue');
+var qry = 'agentSTARTSWITHIBM Integrations^state=ready^sequence<'+ gs.getProperty('x_ibmg3_hcms.Outbound_Retry_Count');
+gr.addEncodedQuery(qry);
+gr.query();
+//gs.info(gr.getRowCount());
+while(gr.next())
+var outBoundCall = new RetryOutboundcalltoBroker().outBoundResponseCallStatus(gr);]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>debada54@in.ibm.com</sys_created_by>
+        <sys_created_on>2019-11-19 12:19:11</sys_created_on>
+        <sys_id>be4ee85cdb95845037ad349f9d961997</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>IBM MCMP Auto Retry Mechanism</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sysauto_script_be4ee85cdb95845037ad349f9d961997</sys_update_name>
+        <sys_updated_by>debada54@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2019-11-27 12:21:21</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.BrokerRequestExtract</api_name>
+        <client_callable>false</client_callable>
+        <description>//This script extracts the JSON string from the broker_approval_JSON field in the catalog request record</description>
+        <name>BrokerRequestExtract</name>
+        <script><![CDATA[// Script include is to generate XML and pass it to web services
+// XML is to DA
+var BrokerRequestExtract = Class.create();
+
+BrokerRequestExtract.prototype = {
+    initialize: function() {},
+
+    billofSummary: function(current) {
+
+        try {
+            var str = current.x_ibmg3_hcms_broker_approval_request_json;
+            var requestBody_json = JSON.parse(str);
+            var specialInstructionsContent = requestBody_json;
+            var orderNumber = specialInstructionsContent.orderNumber;
+            var htmlArray = [];
+
+            //Create a variable to contain approval summary in html format.
+            var hourly, usageCharge, recurringCharge, totalCharge, USD, usgaequantity, reccuringquantity, quantity, totalUsgaeCharge, totalRecuringCharge, oneTimeCharge,description;
+			//loop thru all the ritms
+            for (var i = 0; i < specialInstructionsContent.requestedItems.length; i++) {
+                var html = [];
+                //Initiate the html field
+                html.push("<html><head>");
+                //html.push("<style> table {background-color:red;} </style>");
+                html.push("</head><body>");
+                html.push("<table style='border:1px solid black;'>");
+                html.push("<tr style='background-color:#0099ff;color:white;text-align:center'><th colspan='8' style='text-align:left;padding:5px;'>Cloud Broker Order Number: " + orderNumber + "</th></tr>");
+                html.push("<tr style='background-color:#0099ff;color:white;text-align:center'><th style='text-align:left;padding:5px;'>Service Name</th><th style='text-align:left;padding:5px;'>Item</th><th style='padding:5px;'>Quantity</th><th style='padding:5px;'>Currency</th><th style='padding:5px;'>One Time Charge</th><th style='padding:5px;'>Usage Charge</th><th style='padding:5px;'>Recurring Charge</th><th style='padding:5px;'>Total Monthly</th></tr>");
+
+                USD = specialInstructionsContent.currency;
+                var service = specialInstructionsContent.requestedItems[i].serviceName;
+                if ((specialInstructionsContent.requestedItems[i].billOfMaterials) != null) {
+                    for (var j = 0; j < specialInstructionsContent.requestedItems[i].billOfMaterials.length; j++) {
+                        var bomArray = specialInstructionsContent.requestedItems[i].billOfMaterials[j];
+						description = specialInstructionsContent.requestedItems[i].billOfMaterials[j].description;
+						
+                        if (bomArray.hasOwnProperty("usageCharge") && ((!bomArray.hasOwnProperty("recurringCharge")) && (!bomArray.hasOwnProperty("oneTimeCharge")))) {
+                            usgaequantity = specialInstructionsContent.requestedItems[i].billOfMaterials[j].usageCharge.quantity;
+                            totalUsgaeCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].usageCharge.totalValue;
+                            usageCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].usageCharge.unitValue;
+                            quantity = usgaequantity;
+                            totalCharge = totalUsgaeCharge;
+                        } else {
+                            usageCharge = 0;
+                        }
+						
+                        if (bomArray.hasOwnProperty("recurringCharge") && ((!bomArray.hasOwnProperty("usageCharge")) && (!bomArray.hasOwnProperty("oneTimeCharge")))) {
+                            reccuringquantity = specialInstructionsContent.requestedItems[i].billOfMaterials[j].recurringCharge.quantity;
+                            totalRecuringCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].recurringCharge.totalValue;
+                            recurringCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].recurringCharge.unitValue;
+                            quantity = reccuringquantity;
+                            totalCharge = totalRecuringCharge;
+                        } else {
+                            recurringCharge = 0;
+                        }
+
+                        if (bomArray.hasOwnProperty("oneTimeCharge") && ((!bomArray.hasOwnProperty("usageCharge")) && (!bomArray.hasOwnProperty("recurringCharge")))) {
+                            oneTimeCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].oneTimeCharge.value;
+                            quantity = '1';
+                            totalCharge = oneTimeCharge;
+                        } else {
+                            oneTimeCharge = 0;
+                        }
+						
+                        if (bomArray.hasOwnProperty("oneTimeCharge") && bomArray.hasOwnProperty("usageCharge")) {
+                            oneTimeCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].oneTimeCharge.value;
+                            usgaequantity = specialInstructionsContent.requestedItems[i].billOfMaterials[j].usageCharge.quantity;
+                            totalUsgaeCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].usageCharge.totalValue;
+                            usageCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].usageCharge.unitValue;
+                            quantity = usgaequantity;
+                            totalCharge = totalUsgaeCharge + oneTimeCharge;
+                        }
+
+                        if (bomArray.hasOwnProperty("oneTimeCharge") && bomArray.hasOwnProperty("recurringCharge")) {
+                            oneTimeCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].oneTimeCharge.value;
+                            reccuringquantity = specialInstructionsContent.requestedItems[i].billOfMaterials[j].recurringCharge.quantity;
+                            totalRecuringCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].recurringCharge.totalValue;
+                            recurringCharge = specialInstructionsContent.requestedItems[i].billOfMaterials[j].recurringCharge.unitValue;
+                            quantity = reccuringquantity;
+                            totalCharge = totalRecuringCharge + oneTimeCharge;
+                        }
+						
+                    html.push("<tr style='border:1px solid black;text-align:center;'><td style=text-align:left;padding:5px;'>" + service + "</td><td style=text-align:left;padding:5px;'>" + description + "</td><td style='padding:5px;'>" + quantity + "</td><td style='padding:5px;'>" + USD + "</td><td style='padding:5px;'>" + oneTimeCharge + "</td><td style='padding:5px;'>" + usageCharge + "</td><td style='padding:5px;'>" + recurringCharge + "</td><td style='padding:5px;'>" + totalCharge + "</td></tr>");
+                    }
+                } else {
+                    quantity = "Not Available";
+                    oneTimeCharge = "Not Available";
+                    usageCharge = "Not Available";
+                    recurringCharge = "Not Available";
+                    totalCharge = "Not Available";
+                    html.push("<tr style='border:1px solid black;text-align:center;'><td style=text-align:left;padding:5px;'>" + service + "</td><td style=text-align:left;padding:5px;'>" + description + "</td><td style='padding:5px;'>" + quantity + "</td><td style='padding:5px;'>" + USD + "</td><td style='padding:5px;'>" + oneTimeCharge + "</td><td style='padding:5px;'>" + usageCharge + "</td><td style='padding:5px;'>" + recurringCharge + "</td><td style='padding:5px;'>" + totalCharge + "</td></tr>");
+                }
+                //Close the html field
+                html.push("</table></body></html>");
+                htmlArray.push(html.join(""));
+            }
+
+            //Log Incomming BOM Values Array
+            new HCMSLogLevel().LogMsg('info', 'HTML ARRAY BOMValues: ' + htmlArray);
+
+            //Populate the summary field with the html content at requesteditem level
+            var bomValues = new GlideRecord('sc_req_item');
+            bomValues.addQuery('request=' + current.sys_id);
+            bomValues.query();
+            while (bomValues.next()) {
+                sname = bomValues.variables.var_service_name.toString();
+                var bill_sum = bomValues.x_ibmg3_hcms_broker_approval_item_summary;
+                for (count = 0; count <= htmlArray.length; count++) {
+                    htmlArray[count].toString();
+                    if (htmlArray[count].match(sname) && (bill_sum == '')) {
+                        bomValues.x_ibmg3_hcms_broker_approval_item_summary = htmlArray[count];
+                        bomValues.update();
+                        break;
+                    }
+
+                }
+
+            }
+
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Build Approval Request Summary: " + this.type + "(" + err.message + ")");
+        }
+    },
+
+
+
+    populateConfigValues: function(current) {
+        try {
+            var str = current.x_ibmg3_hcms_broker_approval_request_json;
+            var requestBody_json = JSON.parse(str);
+            var specialInstructionsContent = requestBody_json;
+            var htmlArray = [];
+            for (var i = 0; i < specialInstructionsContent.requestedItems.length; i++) {
+                var service = specialInstructionsContent.requestedItems[i].serviceName;
+                var itemPropertiesArray = specialInstructionsContent.requestedItems[i].itemProperties;
+                var html = [];
+                html.push("<html><head/><body>");
+                html.push("<table style='border:1px solid black;border-spacing: 5px;'>");
+                html.push("<caption style='font-size:25px solid black;'>" + service + "</caption>");
+                html.push("<tr style='background-color:#0099ff;color:white;'><th style='padding:5px;text-align:left;width:150px'>Configurations</th><th style='padding:5px;text-align:center;width:100px'>Values</th></tr>");
+
+
+                for (var l = 0; l < itemPropertiesArray.length; l++) {
+                    var itemPropertiesJson = itemPropertiesArray[l];
+                    if (itemPropertiesJson.hasOwnProperty("sections")) {
+                        var sectionArray = itemPropertiesJson.sections;
+                        for (var m = 0; m < sectionArray.length; m++) {
+                            var sectionConfigsArray = sectionArray[m].sectionConfigs;
+                            for (var j = 0; j < sectionConfigsArray.length; j++) {
+                                var key = sectionConfigsArray[j].name;
+                                var value = sectionConfigsArray[j].value;
+                                html.push("<tr><td style='padding:5px;text-transform:capitalize;'>" + sectionConfigsArray[j].name + "</td><td>" + sectionConfigsArray[j].value + "</td></tr>");
+                            }
+                        }
+                    }
+                    var propertiesArray = itemPropertiesJson.properties;
+                    for (var k = 0; k < propertiesArray.length; k++) {
+                        html.push("<tr><td style='padding:5px;text-transform:capitalize;'>" + propertiesArray[k].name + "</td><td>" + propertiesArray[k].value + "</td></tr>");
+                    }
+
+
+
+                }
+                html.push("</table></body></html>");
+                htmlArray.push(html.join(""));
+            }
+            new HCMSLogLevel().LogMsg('info', 'HTML ARRAY CONFIGS BOM: ' + htmlArray);
+            //Populate the summary field with the html content at requesteditem level
+            var bomValues = new GlideRecord('sc_req_item');
+            bomValues.addQuery('request=' + current.sys_id);
+            bomValues.query();
+            while (bomValues.next()) {
+                sname = bomValues.variables.var_service_name.toString();
+                var config_values = bomValues.x_ibmg3_hcms_broker_approval_item_json;
+                for (count = 0; count <= htmlArray.length; count++) {
+                    htmlArray[count].toString();
+                    if (htmlArray[count].match(sname) && (config_values == '')) {
+                        bomValues.x_ibmg3_hcms_broker_approval_item_json = htmlArray[count];
+                        bomValues.update();
+                        break;
+                    }
+                }
+
+            }
+
+        } catch (err) {
+            workflow.error("Broker Provision Workflow: Build Configuration Summary: " + this.type + "(" + err.message + ")");
+        }
+    },
+
+    type: 'BrokerRequestExtract'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-10 19:52:53</sys_created_on>
+        <sys_id>6888dcb2dbe21f0037ad349f9d961953</sys_id>
+        <sys_mod_count>243</sys_mod_count>
+        <sys_name>BrokerRequestExtract</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_6888dcb2dbe21f0037ad349f9d961953</sys_update_name>
+        <sys_updated_by>ashabagade</sys_updated_by>
+        <sys_updated_on>2020-03-13 06:33:32</sys_updated_on>
+    </sys_script_include>
+</record_update>

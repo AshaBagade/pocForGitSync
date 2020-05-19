@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="db_image">
+    <db_image action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>Service Portal</category>
+        <format>png</format>
+        <height>39</height>
+        <image/>
+        <name>IBMlogo.png</name>
+        <size_bytes>2324</size_bytes>
+        <sys_class_name>db_image</sys_class_name>
+        <sys_created_by>asbagad1@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-11-27 07:37:32</sys_created_on>
+        <sys_id>8c7ec919dbc66f40e0f5325f9d961938</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>IBMlogo.png</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>db_image_8c7ec919dbc66f40e0f5325f9d961938</sys_update_name>
+        <sys_updated_by>asbagad1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-11-27 07:39:20</sys_updated_on>
+        <thumbnail/>
+        <width>75</width>
+    </db_image>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color>#cae3f3</average_image_color>
+        <chunk_size_bytes>734003</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/png</content_type>
+        <file_name>image</file_name>
+        <image_height>39</image_height>
+        <image_width>75</image_width>
+        <size_bytes>2324</size_bytes>
+        <size_compressed>2347</size_compressed>
+        <state/>
+        <sys_created_by>asbagad1@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-11-27 07:37:49</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>a6ae4919dbc66f40e0f5325f9d9619c6</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>asbagad1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-11-27 07:37:50</sys_updated_on>
+        <table_name>ZZ_YYdb_image</table_name>
+        <table_sys_id>8c7ec919dbc66f40e0f5325f9d961938</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="image" sys_id="a6ae4919dbc66f40e0f5325f9d9619c6">a6ae4919dbc66f40e0f5325f9d9619c6</sys_attachment>
+        <sys_created_by>asbagad1@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-11-27 07:37:49</sys_created_on>
+        <sys_id>aeae4919dbc66f40e0f5325f9d9619c6</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>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</data>
+        <length>3116</length>
+        <position>1</position>
+        <sys_attachment display_value="image" sys_id="a6ae4919dbc66f40e0f5325f9d9619c6">a6ae4919dbc66f40e0f5325f9d9619c6</sys_attachment>
+        <sys_created_by>asbagad1@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-11-27 07:37:49</sys_created_on>
+        <sys_id>22ae4919dbc66f40e0f5325f9d9619c7</sys_id>
+    </sys_attachment_doc>
+</record_update>

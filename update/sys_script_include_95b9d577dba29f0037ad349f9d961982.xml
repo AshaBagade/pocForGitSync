@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.OutBoundCalltoBroker</api_name>
+        <client_callable>false</client_callable>
+        <description>Out bound call.</description>
+        <name>OutBoundCalltoBroker</name>
+        <script><![CDATA[var OutBoundCalltoBroker = Class.create();
+
+OutBoundCalltoBroker.prototype = {
+    initialize: function() {},
+
+    generateApprovalResponse: function(current) {
+        try {
+            var requestBody;
+            var brokerLocation = current.x_ibmg3_hcms_cloud_broker_location;
+            new HCMSLogLevel().LogMsg("info", "* brokerLocation script include for order: " + current.x_ibmg3_hcms_order_number + "*: " + brokerLocation);
+            var restMessageName = gs.getProperty('x_ibmg3_hcms.Approval_Outbound_Rest_Msg');
+
+            var r = new sn_ws.RESTMessageV2(restMessageName, 'post');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setRequestHeader("Accept", "Application/json");
+
+            if (brokerLocation == 'hcmsbroker') {
+                r.setRequestHeader("Username", gs.getProperty('x_ibmg3_hcms.HCMS_Broker_user_name'));
+                r.setRequestHeader("Apikey", gs.getProperty('x_ibmg3_hcms.HCMS_Broker_API_Key'));
+            }
+            var approvalStatus = current.approval.getDisplayValue();
+            var comments = '';
+            var orderNumber = current.x_ibmg3_hcms_order_number;
+            var requestNumber = current.number;
+            var requestedFor = current.requested_for.user_name;
+            var approvalControllerFlag = current.x_ibmg3_hcms_approval_controller;
+            var approvalController;
+            var changeApprovalStatus;
+            var changeTask;
+            var catItemName = '';
+            var mcmCat_items = gs.getProperty('x_ibmg3_hcms.MCMP_catalog_items'); //property holds mcmp catalog item
+            if (approvalControllerFlag == "icb") {
+                approvalController = "ICB";
+                changeApprovalStatus = "SCHEDULED";
+            } else if (approvalControllerFlag == "snow") {
+                approvalController = "SNOW";
+                changeApprovalStatus = "SCHEDULED";
+            }
+
+            var approvedBy;
+            var approvedTs = "";
+            //flag for  order rejection
+            var appr_flag = "";
+
+            //Get approval date from request
+            var reqGR = new GlideRecord('sysapproval_approver');
+            var tempsysid = current.sys_id;
+            reqGR.addQuery("sysapproval", current.sys_id);
+            reqGR.query();
+            if (reqGR.next()) {
+                approvedTs = reqGR.sys_created_on;
+                approvedBy = reqGR.approver.user_name;
+            }
+
+            var reqItemGR = new GlideRecord('sc_req_item');
+            reqItemGR.addQuery("request.number", current.number);
+            reqItemGR.query();
+            var countItems = reqItemGR.getRowCount();
+
+            var additionalDataJson = new AdditionalDataOnOutboundCall().returnAdditionalDataJson(); // returns Additional Data Json stored by SNOW user.
+
+            var aPayload = [];
+            //Initiate the payload field
+            aPayload.push("{");
+            aPayload.push("\"approvalInfo\": {");
+            if (approvalStatus == 'Approved') {
+                aPayload.push("\"ApprovedRITMS\": [");
+                var i_item = 0;
+                while (reqItemGR.next()) {
+                    catItemName = reqItemGR.cat_item.name;
+                    if (mcmCat_items.indexOf(catItemName) > -1) {
+                        changeTask = "true"; ///////// for pre-provisioning hook, true if change task is involved(mvp3)
+                    } else {
+                        changeTask = "false";
+                    }
+                    var currentReqItemNumber = reqItemGR.number;
+                    var taskGR = new GlideRecord('sc_task');
+                    taskGR.addQuery('request_item.number', currentReqItemNumber);
+                    taskGR.query();
+                    var counttasks = taskGR.getRowCount();
+                    aPayload.push("{");
+                    aPayload.push("\"ApprovedTasks\":[");
+                    aPayload.push("{");
+                    // For loop get tasks info
+                    var i_task = 0;
+                    while (taskGR.next()) {
+                        aPayload.push("\"task_sys_id\": \"" + taskGR.sys_id + "\",");
+                        aPayload.push("\"taskNumber\": \"" + taskGR.number + "\",");
+                        aPayload.push("\"serviceOfferingInstanceId\": \"" + taskGR.x_ibmg3_hcms_service_offering_instance_id + "\",");
+                        aPayload.push("\"taskType\": \"" + taskGR.sys_class_name + "\"");
+                        if (i_task == counttasks - 1) {
+                            aPayload.push("}");
+                        } else {
+                            aPayload.push("},");
+                            i_task++;
+                        }
+                    }
+                    aPayload.push("],");
+                    aPayload.push("\"ritmID\": \"" + currentReqItemNumber + "\",");
+                    aPayload.push("\"serviceOfferingInstanceId\": \"" + reqItemGR.variables.var_service_instance_id + "\",");
+                    aPayload.push("\"serviceName\": \"" + reqItemGR.variables.var_service_name + "\",");
+                    aPayload.push("\"cmdbCISysid\": \"" + reqItemGR.configuration_item + "\",");
+                    aPayload.push("\"additionalData\": \"" + additionalDataJson + "\""); // appends fetched JSON from script include to "additionalData" field of outbound Broker Json.
+                    if (i_item == countItems - 1) {
+                        //last item in the array should not be followed by a comma
+                        aPayload.push("}");
+                    } else {
+                        //all items in the array should be followed by a comma, except the last
+                        aPayload.push("},");
+                        i_item++;
+                    }
+                }
+                aPayload.push("],");
+            } else if (approvalStatus == 'Rejected') {
+                //Fetch Rejection reason 
+                while (reqItemGR.next()) {
+                    catItemName = reqItemGR.cat_item.name;
+                    if (mcmCat_items.indexOf(catItemName) > -1) {
+                        changeTask = "true"; ///////// for pre-provisioning hook, true if change task is involved(mvp3)
+                    } else {
+                        changeTask = "false";
+                    }
+                    var encquery = 'state=rejected^document_id=' + reqItemGR.x_ibmg3_hcms_related_change_request + '^ORdocument_id=' + current.sys_id;
+                    var appr = new GlideRecord('sysapproval_approver');
+                    appr.addEncodedQuery(encquery);
+                    appr.query();
+                    if (appr.next()) {
+                        gs.info("inside approval record " + appr.comments.getJournalEntry(1));
+                        var lastComment = appr.comments.getJournalEntry(1);
+                        if (lastComment) {
+                            var commentContent = lastComment.split("(Comments)\n");
+                            comments = commentContent[1].trim();
+                        }
+                    }
+                }
+            }
+            //Request Details
+            aPayload.push("\"approvalStatus\": \"" + approvalStatus + "\",");
+            aPayload.push("\"comments\": \"" + comments + "\",");
+            aPayload.push("\"approvedBy\": \"" + approvedBy + "\",");
+            aPayload.push("\"approvedTs\": \"" + approvedTs + "\",");
+            aPayload.push("\"orderNumber\": \"" + orderNumber + "\",");
+            aPayload.push("\"requestNumber\": \"" + requestNumber + "\",");
+            aPayload.push("\"requested_for\": \"" + requestedFor + "\",");
+            aPayload.push("\"approvalController\": \"" + approvalController + "\",");
+            aPayload.push("\"changeTask\": \"" + changeTask + "\",");
+            aPayload.push("\"changeApprovalStatus\": \"" + changeApprovalStatus + "\"");
+            aPayload.push("}");
+            aPayload.push("}");
+            requestBody = aPayload.join("");
+            new HCMSLogLevel().LogMsg("info", "* Outbound Request body:* " + requestBody);
+            r.setRequestBody(requestBody);
+            r.setLogLevel('all');
+            r.setRequestHeader("Content-Type", "Application/json");
+            //In milliseconds. Wait at most 10 seconds for response from http request.
+            r.setHttpTimeout(10000);
+            var response = r.execute();
+            var responseBody = response.getBody();
+            var httpStatus = response.getStatusCode();
+            workflow.scratchpad.RESTStatus = httpStatus;
+            new HCMSLogLevel().LogMsg("info", " Outbound Approval Response body: " + responseBody + " StatusCode : " + httpStatus + " for order " + orderNumber);
+            //Create record in ecc queue for unsuccessful outbound call
+            if (httpStatus > 201 || httpStatus == 0) {
+                var topic = current.x_ibmg3_hcms_order_number.toString() + "-Approval";
+                var source = current.getDisplayValue().toString();
+                var responsefromHost = "Response received from broker : " + responseBody + "\nResponse status code : " + httpStatus;
+                var ecc = new RetryOutboundcalltoBroker().eccQueueRetryRecord(topic, source, requestBody, responsefromHost);
+
+            }
+        } catch (ex) {
+            var message = ex;
+        }
+
+    }
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-14 03:12:58</sys_created_on>
+        <sys_id>95b9d577dba29f0037ad349f9d961982</sys_id>
+        <sys_mod_count>124</sys_mod_count>
+        <sys_name>OutBoundCalltoBroker</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_95b9d577dba29f0037ad349f9d961982</sys_update_name>
+        <sys_updated_by>debada54@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2019-11-27 12:19:43</sys_updated_on>
+    </sys_script_include>
+</record_update>

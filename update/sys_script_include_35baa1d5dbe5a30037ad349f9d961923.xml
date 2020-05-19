@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.cancelAfterFailure</api_name>
+        <client_callable>false</client_callable>
+        <description>This script will help in changing Catalog task state from "Pending" to "Closed Incomplete".</description>
+        <name>cancelAfterFailure</name>
+        <script><![CDATA[var cancelAfterFailure = Class.create();
+cancelAfterFailure.prototype = {
+	initialize: function() {
+	},
+	
+	changeCatalogTask: function(orderNumber){
+		
+		var req_num,ritm_num,worknote,worknoteContent,lastWorknote;
+		var flag = false;
+		
+		var sr=new GlideRecord('sc_request');
+		sr.addQuery('x_ibmg3_hcms_order_number',orderNumber);
+		sr.query();
+		if(sr.next()){
+			req_num= sr.sys_id;
+		}
+		
+		var ritm=new GlideRecord('sc_req_item');
+		ritm.addQuery('request',req_num);
+		ritm.query();
+		if(ritm.next()){
+			ritm_num= ritm.sys_id;
+		}
+		
+		var taskgr=new GlideRecord('sc_task');
+		taskgr.addQuery('request_item',ritm_num);
+		taskgr.query();
+		if(taskgr.next()){
+			
+			worknote = taskgr.work_notes.getJournalEntry(-1);
+			worknoteContent = worknote.split("\n\n");
+			//stores each entry into an array of strings
+			for (var i = 0; i < worknoteContent.length; i++)
+				{
+				if(worknoteContent[i].includes("INC"))
+					{
+					flag=true;
+					taskgr.state='4'; // set the state of Catalog task to "Closed Incomplete"
+					break;
+				}
+				else{
+					flag=false;
+				}
+			}
+			new HCMSLogLevel().LogMsg('info',"Flag value is: "+flag);
+			
+		}
+		return flag;
+	},
+	type: 'cancelAfterFailure'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>vinverm7@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-11-02 13:15:20</sys_created_on>
+        <sys_id>35baa1d5dbe5a30037ad349f9d961923</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>cancelAfterFailure</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_35baa1d5dbe5a30037ad349f9d961923</sys_update_name>
+        <sys_updated_by>asbagad1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2019-07-16 08:49:31</sys_updated_on>
+    </sys_script_include>
+</record_update>

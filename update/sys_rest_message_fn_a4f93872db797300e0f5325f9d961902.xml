@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn">
+    <sys_rest_message_fn action="INSERT_OR_UPDATE">
+        <authentication_type>inherit_from_parent</authentication_type>
+        <basic_auth_password/>
+        <basic_auth_profile/>
+        <basic_auth_user>https://cb-snow-dev-api.gravitant.net/pr</basic_auth_user>
+        <content>{"serviceOfferingInstanceId":["MTVSY8Y4FF"],"orderNumber":"QE1C266Z","message":"Request Cancelled or Incomplete","status":"Failed"}</content>
+        <function_name>postProvisioning</function_name>
+        <http_method>post</http_method>
+        <lock>false</lock>
+        <oauth2_profile/>
+        <protocol_name/>
+        <qualified_name>Post Provisioning Status Call [ postProvisioning ]</qualified_name>
+        <rest_endpoint>https://cb-snow-stage-api.gravitant.net/provision/snow/adapter/v2/postprovisioningtaskstatus</rest_endpoint>
+        <rest_message display_value="Post Provisioning Status Call">7d697072db797300e0f5325f9d961937</rest_message>
+        <sys_class_name>sys_rest_message_fn</sys_class_name>
+        <sys_created_by>asbagad1@in.ibm.com</sys_created_by>
+        <sys_created_on>2019-06-06 07:55:52</sys_created_on>
+        <sys_id>a4f93872db797300e0f5325f9d961902</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>postProvisioning</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_rest_message_fn_a4f93872db797300e0f5325f9d961902</sys_update_name>
+        <sys_updated_by>nmandya1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2020-05-12 11:04:37</sys_updated_on>
+        <use_basic_auth>false</use_basic_auth>
+        <use_mid_server/>
+        <use_mutual_auth>false</use_mutual_auth>
+    </sys_rest_message_fn>
+</record_update>

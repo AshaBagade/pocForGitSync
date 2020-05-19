@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="x_ibmg3_hcms_broker_request_type" label="Broker Request Type" language="en" table="sc_request">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>x_ibmg3_hcms_broker_request_type</element>
+            <help/>
+            <hint/>
+            <label>Broker Request Type</label>
+            <language>en</language>
+            <name>sc_request</name>
+            <plural>Broker Request Types</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>rannep12@in.ibm.com</sys_created_by>
+            <sys_created_on>2018-07-17 05:30:39</sys_created_on>
+            <sys_id>cf163716dbd39300e0f5325f9d9619c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Broker Request Type</sys_name>
+            <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+            <sys_update_name>sys_documentation_sc_request_x_ibmg3_hcms_broker_request_type_en</sys_update_name>
+            <sys_updated_by>rannep12@in.ibm.com</sys_updated_by>
+            <sys_updated_on>2018-07-17 05:30:39</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>statechange (v2)</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    try {
+        //Defining variables
+        var body = request.body.data,
+            approvalStatus, stateStatus, requestUpdateTS, cancelAction, requestedFor, requestNumber, checkCatalogTaskFlag, requestsys_id, catItem;
+        var responseBody = {};
+        //Track the order number
+        var orderNumber = body.orderNumber;
+        var eventType = body.eventType;
+        requestedFor = body.triggeredBy;
+        var grREQ = new GlideRecord('sc_request');
+        grREQ.addQuery('x_ibmg3_hcms_order_number', orderNumber);
+        grREQ.query();
+        if (grREQ.next()) {
+            requestNumber = grREQ.number;
+            requestsys_id = grREQ.sys_id;
+            approvalStatus = grREQ.approval.toString();
+            stateStatus = grREQ.request_state.toString();
+            requestsys_id = grREQ.sys_id;
+            requestUpdateTS = grREQ.sys_updated_on.toString();
+
+            if ((body.approvalController == "ICB") && (eventType == "APPROVALREQUEST")) {
+                new HCMSLogLevel().LogMsg('info', '*State change request payload for Enterprise Marketplace approval request: *' + JSON.stringify(body));
+                grREQ.get(requestsys_id);
+                grREQ.setValue("x_ibmg3_hcms_external_approval", "not_yet_requested");
+                grREQ.setValue("x_ibmg3_hcms_approval_controller", "icb");
+                //Update the record
+                grREQ.update();
+
+            } else if ((body.approvalController == "SNOW") && (eventType == "APPROVALREQUEST")) {
+                new HCMSLogLevel().LogMsg('info', '*State change request payload for SNOW approval request: *' + JSON.stringify(body));
+                grREQ.get(requestsys_id);
+                grREQ.setValue("x_ibmg3_hcms_external_approval", "not_yet_requested");
+                grREQ.setValue("x_ibmg3_hcms_approval_controller", "snow");
+                //Update the record
+                grREQ.update();
+            }
+
+            if (((body.approvalController == "ICB") || (body.approvalController == "SNOW")) && (eventType == "CANCEL")) {
+                new HCMSLogLevel().LogMsg('info', '*State change request payload for CANCEL: *' + JSON.stringify(body));
+
+                checkCatalogTaskFlag = new cancelAfterFailure().changeCatalogTask(orderNumber); // check whether Incident is created for failure scenario or not.
+                var failedReason = "";
+                if ((approvalStatus == "approved" || approvalStatus == "rejected") && (checkCatalogTaskFlag == false) && (grREQ.x_ibmg3_hcms_requestapprovalhold == false)) {
+                    cancelAction = "Request for Cancel is failed";
+                    if (approvalStatus == "approved") {
+                        switch (stateStatus) {
+                            case 'in_process':
+                                failedReason = "Already Approved";
+                                break;
+
+                            case 'closed_complete':
+                                failedReason = "Already Approved and Completed";
+                                break;
+
+                            default:
+                                failedReason = "Already Approved";
+                        }
+                    } else if (approvalStatus == "rejected") {
+                        switch (stateStatus) {
+                            case 'closed_rejected':
+                                failedReason = "Already Rejected";
+                                break;
+
+                            default:
+                                failedReason = "Already Rejected";
+                        }
+                    } else {
+                        failedReason = "Cancellation Error";
+                    }
+
+                } else if (((approvalStatus == "requested") || (approvalStatus == "not requested")) || (checkCatalogTaskFlag == true) || grREQ.x_ibmg3_hcms_requestapprovalhold == true) {
+                    if (stateStatus == "closed_cancelled") {
+                        cancelAction = "Request for Cancel is failed";
+                        failedReason = "Already Cancelled";
+                    } else {
+                        var grREQ1 = new GlideRecord('sc_request');
+                        grREQ1.get(requestsys_id);
+                        grREQ1.setValue("request_state", "closed_cancelled");
+                        grREQ1.setValue("stage", "closed_incomplete");
+                        grREQ1.update();
+                        requestUpdateTS = grREQ1.sys_updated_on.toString();
+                        //cancel the change if order is cancelled before change approval
+                        var checkNormalChangeRequest = new cancelBeforeChangeApproval().normalChangeCancellation(requestsys_id);
+                        cancelAction = "Request for Cancel is successful";
+                    }
+                }
+                //Populate the response body
+                responseBody.requested_for = requestedFor;
+                responseBody.sys_updated_on = requestUpdateTS;
+                responseBody.requestNumber = requestNumber;
+                responseBody.action = cancelAction;
+                responseBody.failed_reason = failedReason;
+                responseBody.requestType = "Cancel";
+                responseBody.approvalStatus = approvalStatus;
+                responseBody.orderNumber = orderNumber;
+
+                var strCancelResponse = JSON.stringify(responseBody);
+                new HCMSLogLevel().LogMsg('info', '*Cancel Response payload for order: ' + orderNumber + '* ' + strCancelResponse);
+                //Set the response body
+                response.setBody(responseBody);
+            }
+
+            if ((eventType != "CANCEL")) {
+                switch (eventType) {
+                    case 'APPROVALGRANT':
+                        new HCMSLogLevel().LogMsg('info', '*State change request payload for Enterprise Marketplace approval grant: *' + JSON.stringify(body));
+                        grREQ.get(requestsys_id);
+                        grREQ.setValue("x_ibmg3_hcms_external_approval", "approved");
+                        grREQ.setValue("x_ibmg3_hcms_requestapprovalhold", false);
+                        //Update the record
+                        grREQ.update();
+                        var reqItem = new GlideRecord('sc_req_item');
+                        reqItem.addQuery('request', grREQ.sys_id);
+                        reqItem.query();
+                        while (reqItem.next()) {
+                            reqItem.comments = "Request approved, Change request initiated";
+                            reqItem.update();
+                        }
+                        break;
+
+                    case 'APPROVALREJECT':
+                        new HCMSLogLevel().LogMsg('info', '*State change request payload for Enterprise Marketplace approval reject:*' + JSON.stringify(body));
+                        grREQ.get(requestsys_id);
+						if(grREQ.request_state != 'closed_rejected' && grREQ.request_state != 'closed_cancelled' && grREQ.request_state != 'closed_incomplete' ) {
+                        grREQ.setValue("approval", "rejected");
+                        grREQ.setValue("x_ibmg3_hcms_external_approval", "rejected");
+                        grREQ.setValue("x_ibmg3_hcms_requestapprovalhold", false);
+                        grREQ.comments = "Order rejected in Enterprise Marketplace, hence request is closed rejected";
+                        //Update the record
+                        grREQ.update();
+				}
+                        break;
+                }
+            }
+        } else {
+            var message = "Request not found for order:" + orderNumber;
+            var theError = new sn_ws_err.ServiceError();
+            theError.setStatus(403);
+            theError.setMessage("statechange update failed");
+            theError.setDetail(message);
+            response.setError(theError);
+
+            //Log the error on processing the request
+            new HCMSLogLevel().LogMsg("error", "statechange api ERROR:" + message);
+        }
+    } catch (err) {
+        new HCMSLogLevel.LogMsg("error", "Request State change API: " + this.type + "(" + err + ")");
+    }
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_ibmg3_hcms/v2/broker/request/statechange</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/request/statechange</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-12-16 10:03:48</sys_created_on>
+        <sys_id>7892d770dbb10010c9b7e4da4b96192d</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>statechange (v2)</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_ws_operation_7892d770dbb10010c9b7e4da4b96192d</sys_update_name>
+        <sys_updated_by>nmandya1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2020-05-12 12:35:54</sys_updated_on>
+        <web_service_definition display_value="HCMS Broker">3a955909dbe3d70037ad349f9d96199a</web_service_definition>
+        <web_service_version display_value="v2">7c92db30dbb10010c9b7e4da4b9619d3</web_service_version>
+    </sys_ws_operation>
+</record_update>

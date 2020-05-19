@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_content">
+    <sc_cat_item_content action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <category display_value="Hybrid Cloud Services">69fbd542db3ad740e0f5325f9d96190f</category>
+        <content_type>external</content_type>
+        <cost>0</cost>
+        <custom_cart/>
+        <delivery_plan display_value="DEFAULT">523da512c611228900811a37c97c2014</delivery_plan>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-03 00:00:00</delivery_time>
+        <description/>
+        <entitlement_script/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <kb_article display_value="KB0000029">24d9243187032100deddb882a2e3ec33</kb_article>
+        <list_price>0</list_price>
+        <location/>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <module/>
+        <name>Cloud Broker Store</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>false</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>false</no_proceed_checkout>
+        <no_quantity>false</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>false</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("https://bfast-sys-test.gravitant.net?sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <recurring_frequency/>
+        <recurring_price>0</recurring_price>
+        <request_method/>
+        <roles/>
+        <sc_catalogs>e0d08b13c3330100c8b837659bba8fb4</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <short_description>Click here to order Hybrid Cloud Services</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <start_closed>false</start_closed>
+        <sys_class_name>sc_cat_item_content</sys_class_name>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-21 03:03:31</sys_created_on>
+        <sys_id>a2ead982db3ad740e0f5325f9d9619f7</sys_id>
+        <sys_mod_count>65</sys_mod_count>
+        <sys_name>Cloud Broker Store</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sc_cat_item_content_a2ead982db3ad740e0f5325f9d9619f7</sys_update_name>
+        <sys_updated_by>asbagad1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2019-02-06 10:08:19</sys_updated_on>
+        <target>_blank</target>
+        <template/>
+        <type>item</type>
+        <url>https://bfast-sys-test.gravitant.net</url>
+        <use_sc_layout>true</use_sc_layout>
+        <vendor/>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow/>
+    </sc_cat_item_content>
+    <sys_translated_text action="delete_multiple" query="documentkey=a2ead982db3ad740e0f5325f9d9619f7"/>
+    <fx_price action="delete_multiple" query="id=a2ead982db3ad740e0f5325f9d9619f7"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>a2ead982db3ad740e0f5325f9d9619f7</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-21 03:03:32</sys_created_on>
+        <sys_id>121bd182db3ad740e0f5325f9d961994</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>vram@us.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-06-21 03:03:32</sys_updated_on>
+        <table>sc_cat_item_content</table>
+        <type>calculated</type>
+    </fx_price>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>recurring_price</field>
+        <id>a2ead982db3ad740e0f5325f9d9619f7</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-21 03:03:32</sys_created_on>
+        <sys_id>5a1bd182db3ad740e0f5325f9d961994</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>vram@us.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-06-21 03:03:32</sys_updated_on>
+        <table>sc_cat_item_content</table>
+        <type>calculated</type>
+    </fx_price>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color>#ffffff</average_image_color>
+        <chunk_size_bytes>734003</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/png</content_type>
+        <file_name>picture</file_name>
+        <image_height>67</image_height>
+        <image_width>159</image_width>
+        <size_bytes>21636</size_bytes>
+        <size_compressed>6251</size_compressed>
+        <state/>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-26 19:27:11</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0c3ceeb3dbfe9b40e0f5325f9d961985</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>vram@us.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-06-26 19:27:11</sys_updated_on>
+        <table_name>ZZ_YYsc_cat_item_content</table_name>
+        <table_sys_id>a2ead982db3ad740e0f5325f9d9619f7</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="picture" sys_id="0c3ceeb3dbfe9b40e0f5325f9d961985">0c3ceeb3dbfe9b40e0f5325f9d961985</sys_attachment>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-26 19:27:11</sys_created_on>
+        <sys_id>4c3ceeb3dbfe9b40e0f5325f9d961985</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>7Zx5ONTd///fIqSSVCTRWJOMWZi1MbKTJFuWUmY3YUZM9kQiIpLIkiXdkrUiZCu7LBGKRCRKKrojabF8R8udSvfv/vzuz/W7ft/rmvdlFuec5+txzut1Xud9zvuPCdm9S2+lwAYBAABWGuhrm7I/k9kvLX5e9vux4a7r7I9lzvrWrgCwfM38iwuIP78eAASM6Vpau3fbM1lMV3umM8hASwvk7MKk0h0pAODxMNGMZm42IqI21fdW0zDY76wh03QdP8hUM9RvbaS8otQyoR3BUhe615lUrtbR4RG/nRLMHR7uF7bORGnFSYEHfENSqeEBF4NPNn4a8L7o0Fk29ezObEEXfjh7IjG/la+Cf0WMvooJwm9Fhqbk6scB9TV1A0PK2/0FZJ0BIf58spTrjAwX8N4Xh9sqXcF3E+Dy6FjOD1QYJVRAN56YW/VCM24fl99xrgpWJNqQ328tsN0rXPMSsF2Xyy8xVt4MSOEB7JpIxEFgNxiw23z0WQfgl/g+zpsL2HtWah1XSiQAWkMJ1gbstwHZrXtO6gBWUGAt1bAGAzwAA1ADS6o+cLUIqGgRWp4H8K8AoCbBgVsAHm/A7raMjAdwPA5YqztuiXuzNVdoWJHtqbg8XLEsRsd/Lz/4EJ+lpbKkQouB6Na1SMISQvx25SrPODG4v+qqxxPNAJASuY492okZjxbB3JYWZHih4AHwi1u8c9JE4uDs09Ys5+0AMMDybZtVguRv8NvG6+c0myo3xmO/f3nK4alQat6q7QVAyshDywnned/oXDhd3N39dGjowY4azb2ERssjs7SqAxWWM44ffHHTU5OPbz6R9Yfb+uvxvH9c1fx2Z9rG1jPLjhN7n0XoTRctn5uW6JCuMSAWWymuHTQRPhSuHR82AU+TDtE8s6VWrn2O/KRf6RM3vh8BXD2I5/KOBF+2JXG/M9wsZMWqeDIFAOOlzMp7CvzcfvYBA63uc6/VZ/RS5AA/qsGZQwCwX1tW2bwxX72eHwC0U/wVr2qIv61cr1TBu7FyaW/l8mk75HFN2ZoqTSFNAbLfRhe7LdnHNBWC7lyVULSD3NsuoVphYh8U5SyoXGVxQ1DNedVHAn9SpUKZ/zIejdv8awhSD4O5iCetZML5ReMC30tV6vMIh8qCGoLXmkgbRiL0YaYnzUEW+hLjai5LMCf26ZZEbrsNwI9NB5Xpwc7655mo3VtRoFV8GbXhuG7q8rtkFiw+QiQl4a7L9Q1qYcgLw3ez7Fc9jMBr1UMrnq/nU6lxhCrXVWteQystiyI1XZPOXpFVt+Hqnmzu0pBJUus1dx5hf52KZUged00QQVJD32qn1a4H+pdBG2VVVz9chlrGfdykarN01GXD6/Ilqz/UrCfCYSes9JVkOoUj1kCEvIO1alCywiFa8M3Fp5cYXPvDvF24XbedYSozopSRoKq/QSaq4SHZIY8Pc1YJtPV24FDiUPWQypD4kNT4XoFE4vZDf7w3e6Jg2nhwh9hToaeqT3kpsXANi4vxpo8uXzBfjYiw0cy5UGh6xeTE5TWqh+MxdwJEDAzTclKjOzbYi9pP0a88Z5WsfhQtuevcXcv2phG95+eec791X7EyaF1AfTBNQSxhPd96mpj7+iuxOy+JdYSK1ZtDUbCXscNxq+KYFlaKhYo+6yIbBaJ3RMtHiytCzDMyL2X2ZS63mLBoMo/I2G92JFfXQsVsMGPZvZgsi8zE3S/NxM1oGdsun8ikXWaaq//haz0TwmtdvbPaWOsPk5RrBwbL6kDLSWL5HkpSDiuzgg77I2rkr93p9nFTLI2dkSgNVcvMuIDRUtmhYplvOnGWqs43GHvo/XnWrmXDCunnJnxP9q19veXJFvFLqjuLYZR9Dpkx52KssvSzTLL0XpYjc0fTEy+V65Raf/IX1KjfsXnfZj1aRMvSxGGzbrNH6QLpIkZq2Mlc5UyHNPELpdrutxjpY7FJN/f7Je1kpvd5lg9/3HgEMmM+4/QxfVJvhRVv/gpZ3p4VLetxtYhDTJwEpL7njYmWbfV2rTRCNOHcwPHI4jbcxfu6p3RXhdHr9g3KDjrVOdVdlOeVl5I3NHphNBZvalR8aculbTu37ay/03wn9U5nHCJBDdYFH04YTuhK6C+ys/GwUSq8XHiDYpA3ZHPJeqywjBFog7FOs7Kwsc3XzUnMkesszSlNX51evCtqV1ZSJ6366pvChsKMIrGrTx/w9uQWOhUeIdCIorSi2tzqsajyqCMlR07NqPGtPNEtmCVhI+Hret1lLXYPti++5fyY+pHatzEjEJpVq1DrA5XBwjVNW2roiWYJHXo0UVqxa8BEcGiI4bEm5XN45QTxuke3y4d2sCYP2Q54tU8mJuQnVI1e7rkyhhyjj53oTW5WTd6SZK3ierf6ttZjk6dt6suTo6EO/dm+xlrG/rSCYRkICRJpmdN1tSjNPXOK8FoU/w7vkjyIH8Sh+uB91geaURVFt4uajKuZSQcC+7WOysyR57zm2oB0PzkuGneIv4b/3iWf3nv5SN0KV8f2UN7ldY9qhKUUa6zTiDiWc+xpZY6U/e1Xp3OkpoZjWyJb6IKBu32fd97lIzwjhFb7rtgceCLQMkg93DnYakMb7BzCva1Xy7Vf+6N2jHZfAg1mjLkC3oFQxGcqH8Q9RJWolqjXKVOtm+9bJVoZOBpuxCgr5iIZjjf7p0cnTjxJfLJ80Fs0FnLb1tnzQkvV28B0kQxlYSVszPadwbvQZ//UEFK8LBImN77GXS5cwLNKooomDWlDtgU/0NqnKLlrXF/RyOvMq8gyhKdsrUqa0tPi45szTpftXLnzUQI2SSTeDeQEV8OWwwLORJ4+pJkpZRRVSHtBe0Z1a8qmBObN1jJCiyCS0XwNDvmns5dagwUKNS89N7dR6FLky6NRLKm37oQ0YmKykrbeGW3Ob+w5jTr/OnluVLhKeOBMYVqQoSVYwupZefZBTB7ukGePwOC6pVuD9vBm426cLFR0um+cNWp5Lte3XN7LyMF/f2XjscoCLoeXyy0EngYeednbNWprbAWx7i8gfAxKFMevCzmZu7ZH9Ny6ow8Uej2eip9gNt6K6z17PSOrppjcSm2njjzrAyftFYzJPPfsnCBjZffD6yv791wfnXyn0wM5d0ehpzSgUKv44i3cjTJKekPLnW3q5n+YvzX/aI4ca39UQOh6z2gbE/cue6f66n7P3rKpGXzDzR4LLguj+9T7lE8Gn/Kn1HNDMkfex3xyss3Z5XRotJ67nXuGT0awsKv43n2JdjVz04jOrS/1BOs33ZxNfO0OXolcaXHqfN0TGWdtz6GRqWX9U5IrsQ/dwryzB/g6NrlJ0CQgBzXjx+N1E8ziP+0l7i0xbsa3db7o85rW69m06rwqztpzx4R5A/3hyLGOKNp4a1hidOIRX+UPvXY9qYXew6SW/oOrmK9LhFgD7TpzocPbyra17Bu/wRrP63m6xvKGZfwV7AGnF6wXuNmoDuP60vOl8bnF+xyKx7zKC7ypUyPiSaiWR2/LPd+IzHXeT8KoPSqf8GJO1U5N9os88nXZPNPSVNrtvnksp8y47MDb7aMa3VqPTtxX3zvb++B179GDFe4pE229elO8gQGts5GTEau0lkbERTQFrQx6mYTGYzBP1F1mRqbTtVrJrfJJorOps025oiIQ3/f3X3a1tMW2XTg3fi7qlpNP2syLipdiV3rqquokbzZ4qMD2v93zabTSvddd4vXF/lXGQz6gowpz9h+uTZrdTf8UJRYVNcfDHTsxTVIB9wCAJphubsWyMtqJJTGdlAlkJpGi7OHkDMxfOHUPZwLJgcICESk0OkNN+nXpLWkQnawmbYkwgho5a1Hs6fpeLhQzr13mJC8HEoYsrY4XwHlg2QacKCwCyMPJkeGK9VCT/mwXy/4+XwyRBn1uwnJQk9aYrwBZGe0GaTFdKCCEMhJMgqmgQSiMMgyBQcNVlUBwKAwJgWIgMFUwFIaFYrBQGOjrJY0XYL/jXMhUrKm27lcc+z81aXsWyxkLgbi7uyu7qygzXWgQGAaDgUDhEDgczG4BdvVksAgeYIarzBcj3+xoU1xJLnRnFp3JAM3/TyAyD7PUpKUFQAuur+Nycv4LxHD96ju2FyEeBGcITBkKWUzk/G0Tv7j0r+rfGiCT/lI6H3Zx/Dw2MglCcaQ4URgsV7YOtqiO3Vsjo7/vr5PTokpXlo4b6++VruaezhSIKcWVediFRNFxY/dEZnFTphTqf2KK3XxRQyw69Td25mt+6zyKB/03svmaLzL8dx2O7TSslguFwGK6mDOZjvgv0/X7QYx9DmNPTxRIwYhAojPmC7fgID+LFrNH0Wa/8GwtGgxFgmFwc/a8hqOxMBgYisBCoQuMfGn5kw0jdhqRCSzCD1bgCHMYO0HQWFWVhVZ+aPuzHSaZTvX8R1a+t1xg46/pitViOjJd2I0oeBUcZLHiRVXsg+zuL+dYvKupnibIQEcLCcMg2b1Qhi00s6Ddona0maTD89Nfg0GiuLL97or/IfifM1uTQPux9FuFIx3PHqEymU7GstcIMhqFRoHhSBQVrKoCQ4AxRIQqGEOmENEYMkqVjCHhIF9FPyIgvzIWjuDveogjk7BUposTgYWnOxFoFIgzg4aDfC/8MWhGRlgDhiuLwDZkoP2553R2z6EwjCqJSCWAoVAUCawKJaLBGAyV/Q1NhZHgFAQRjvwSyR/lv5j+1k923ZdFm8wksc1/HwhKlYLAQImqYCIGDgXDYCgiGKNCRICpaAqcQGD3AU4ifgMtMPYLyNiFzr6nEBwXtPkWBRSJiEQTSXAwGs4OgCqVgAQTMDA2DINEI+DsIMDRsG+IRcz8gtKnz3vcc5E5YUY59Ls58Xn1dya4uFLmFyQ16W8rkvQvgnnN5zUSSyDN3zfwpM95S8ZBfij9vYz+azj/mQt+kf+e4W5PYfzderOg1e+NuDKpLHeCC0WDxvb0P1sMFxP+4vFFM+q/EgpXgtu/DARGhYRCk8hgKoHIziYEFA0mUBBkMJSEgGJUkBQ4jED4t4FQUcGqQP9/CMR3AMmewKBRyHjIN+G3gv9NsUOiCQQyEYViuxnBjh0KTQYToEgoGI1SIaDJMAp7yaT+38dukRslJ3Z/LYFMhhvF5T9ZBNkcAvt0QGHfGakuTCcQwdnZkU4izKsgbgzy163aX/chEIsJWnCz/MXG/8Oxkiku9P9kpi7o5V9uAv0vG/O/zs1/tl/h5OZiu8wfdy3fdkK/7nK+bem+zE/d+Rn2zyKO+3xO+zdL6k/yxayT/087TTSaiCSqIohgIhRN+bLTJKAIBDARBldFsDefFAQV/o1FXmz7953F/Lebzd+a+TUOC9y9sHb+XDq/W2XLPic4nm31l7Kf21vNB8jx8Oc6FBzKviCw+fev0oXVP0ut/15q/TfS71UWDDoLD/8q+al4gWr+8PzlqGfmTCBR5of2c9HPrXfTPSiOVtp0thtdP3sDgfkq+rlmUaX193okaqHQ+hfhl5xZ8Fzny0MjyNenRngBduC+PbFaLHP/+xcHwoFwIBwIB8KBcCAcCAfCgXAgHAgHwoFwIBwIB8KBcCAcCAfCgXAgHAgHwoFwIBwIB8KBcCAcCAfCgXAgHAgHwoFwIBwIB8KBcCAcCAfCgfyXIQLffwOCwiCrSbtLq+ONxPt6AQAAkfRNjQDASw4A/AIA4MMc+3MEAA5DAeCFHQBgYwFAlHnmQK0uAPC5GWhrmHs8fJX4iGlG2Vh/azjt9ejDXBJ0vWMZAyQQDFKs41l9toFfdgP3jiXLYCaMsDc7qg+kuAT0KtifXn5WoVFIRminB8x++9LKlTydXEsokNFOhm1/OXDObW8pPn0YNxw2g7d06EyamEmcfdg/4fPJO0mGDI9bwa/Jp13CwyO3CfbsdP6me0z1VtuK1IObb/pQPlYMJlkJhLrvvzeZyg8oJso3v7WG3WoMTytQbs5y2W6HE4ywKkTde5xmLWkRfnjaZlUf9kFmRl+M+7OVyT41R+DAkkge9t+ugsBrgzsBC2UVZPPUQEG9j3O8XLX9zE3MZZtxRAFPxqsNkdsG0HicJ99Wt6LHCYa2QW2H2zfpQuOVPqAjPQTqr7ibjYvF5doLv95UHFK06mObuPHL3M3RLY//jN7dUI9xKxC/JntgUOt2oY1v6boB3zf7RJbl13e7KD8r7im/KL16c3QcLKN5HxTmUWPKiIJV08Aj62ftVkx5rYl3sN03uhH/gf9YozJM/jTfXu7epcFLXsnDaJfEOjX0GpKJXFrUyjLSlnyFhMATpC1k1t3YKB+v9w4BR25e5fLB6wTQACPxly51+8tIGNXn07V3RU4Sng6De1Wpn3zM3Sykue1eJ0uUHEQ/aB7rmHHG/JGwfwd+HcarYG/XBKrgeGzTsFRLHVwuWZf1Tq6t40q/x+QudHj+CjdrQ++1XaXEjyst8nJinr1TcOcSjAreItlUMWguH7BVYuYikot2di/hDM8jYgYr9nG+6FQW3f2oQFH1odyPeWq24x/4FUtrHgRkZKVtjiG+y/FxE9tj/Wjj6zFjKeGu/fW31F7JNVAiY6cLZ8kb3pwtqdUT5kE3B5KcXhuBkhor6DEg/hfnu6RDrt4+hmwoGp5ye4VeYyd8/eI1kab0UovyG8nni0PVjrLscwc/2N5pfthnaxMIDlUM9Z2tTx+D1sOFkVHBB/p8eJBRsaiBA9OpOpN1wTmGdaSXZmsuv3pRq9+PxgXLt6PdwLdGXVMRjsHhG3fgo8WGoWKaelLVxQZ6zIgzxlrPwovENOtHCqHYT0HIuCDSlvN/Tq3XlIm6396WoO29aW+r5eE4MeXQEqdhf/0ltmGPSnewrn5MSgWl5FZleirVwrudJNtfCRn9MbCKTlKKyE/YPXC6wAB/LCXPELc2TCzZ2EGgoOOlWOgd2dRetzknwcnNiMSneV7nSXXDHWeCsKvwNhak21YHcSLT1zMkgatPe/ZMr3ve8Wrf0MShS42UukLK/X2t1iNKfS305bXOs4xNNgGwSzWDBDGT8Wi/DiXCcLzNjRwf0UhUp3dcUv+9jTXuR/NzEIzLE7vHxaLhWcdbO43u0Fc/qZ0OeXceeT0S7YM5filGqAP1sspA8M6gXZ6NfVUk4gbSUMFsQNyYHqV9QPqUvWZCQ4CFyAA0tDr+3sFd6NvDMqyARuUL4jv3hJr47lfR7AYXNXjujfE4a5ullKoeR1U+ZSO51yyZ2R8oOP5BcvfLgscdBR3Qbqdnkk1zXarrjQgfcqn3RXyWA759cL4156Xnk3QyJXlkkj3Gqk1hA5NXrjzR1b91/4CF8hoRilOZmaKx+TZYZcMVubAzV+azunCjvc5l9YyEIIRrWaaEw+HyE/IbL4YU7l7xesaD28uadyv1Rlyn0VC17DIrTBRzPLI1XXjNeXn91Aq5mMqut/tl/bVLrr89p8M1mL9DOWIZ3wef44zd3XIskvlHH12ni3x+JQLiVplXbK6xdKL4tc86OWzrFREfsBIoWt8Fzi9si9iRzOzq9t7XOZr7yDvQumfscMefrFOh3krszH55qyTzlVduQhCNlz47uee4z822uhHx1bYtpXap3GvWscws0WSluCf3dFTkkhuv8052EwyBP/OOSZYFYSGyBe+aUoY6RNMGlRFWagmPnJ85KQ372Fllx1jBA6xO5pxoZghLhb7wzTvrmHtR+8SZle0netafpyllx098cGlg8R4JmzmWLb40slXvOW+0rSbKJVvkoUgRK6/o8l3FmEhcU2lkTTCK+62VnHnxeGt49Huf2tPlz+Q2fzj73iYN/h6/sfzNdWXsvSe3L330H+r4rDCbheLRXvmPYYXghOOTE4rjswdCWi1XsDYJnvqzm3LJgmLzpmqFe2VDtKyAVS2BLnvqAzqPeKlHCNu7Z5mhw8Rc43ivuShuT9yZ14RKqvA1T0Ia4e3akk/ol6muObev2TyvO9oIC6k6vVTHptY0jBbXSB5nCAypGsog1RXefDgp1WMpmxzBzpswNRfdRFaC9zth0wN2V0RyiHEj+VUOWxlVzluEdJjSiN25w+FFopMldqohR7H3pxTyma7JayrrZrpu3PLX8rmpbSMqkX3PC/ygG13w2PX6ycA01KG52l2vSu8uAzwmTQ60NbiPuUE++OhqCfOUXUtZwodsrrruEjowiaQeLsmOG0WcRca1Z6Cz84Lruvc77kcLFuxvutxWbpdKsmvqq8c4eus2WL7QWb3Uw1H40g1wrBm9Oioq0aOwM+2j8G5JfmDDCzUhyWknBSdygZCXBgl/7ExEypAMP2MaBfiA9WBruTZyz/+Yk4HOLu1cTbtj/wOBzX8ShFQAAA==</data>
+        <length>8324</length>
+        <position>1</position>
+        <sys_attachment display_value="picture" sys_id="0c3ceeb3dbfe9b40e0f5325f9d961985">0c3ceeb3dbfe9b40e0f5325f9d961985</sys_attachment>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-26 19:27:11</sys_created_on>
+        <sys_id>cc3ceeb3dbfe9b40e0f5325f9d961985</sys_id>
+    </sys_attachment_doc>
+</record_update>

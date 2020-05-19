@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_tabs">
+    <pa_tabs action="INSERT_OR_UPDATE">
+        <canvas_page/>
+        <name>New Tab</name>
+        <page display_value="PA New Tab">714f3b4ddb212300e0f5325f9d961912</page>
+        <sys_class_name>pa_tabs</sys_class_name>
+        <sys_created_by>rannep12@in.ibm.com</sys_created_by>
+        <sys_created_on>2018-11-02 05:19:35</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>c24f3b4ddb212300e0f5325f9d961916</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>New Tab</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>pa_tabs_c24f3b4ddb212300e0f5325f9d961916</sys_update_name>
+        <sys_updated_by>rannep12@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-11-02 05:19:35</sys_updated_on>
+    </pa_tabs>
+</record_update>

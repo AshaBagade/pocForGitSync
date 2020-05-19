@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri>/api/x_ibmg3_hcms/brokerrequest/test</default_operation_uri>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>brokerApprovalResponse</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+ //Defining variables
+	//var body = "RBB ******** " + request.body.data +"********";
+	var body = request.body.data;
+	var strC;
+	
+	try {
+			//Convert request JSON in request body to a JSON string
+			strC = JSON.stringify(body); 
+	}
+	catch(err) {
+		   gs.info("****** Unable to stringify the request payload: " + err);
+	}
+
+	// Log the incoming payload to validate when testing
+	gs.info("log1: SIMULATED BROKER ADAPTER ******* STEP 1 ********");
+	gs.info("log2: SIMULATED BROKER ADAPTER ******* STEP 2: " + strC);
+	gs.info("log3: SIMULATED BROKER ADAPTER ******* STEP 3 ********");
+	//gs.log("log3: SIMULATED BROKER ADAPTER ******* Status Code 503 Returned  ********");
+	
+	//Testing Error Messages
+	//Raises a response error
+	var theError = new sn_ws_err.ServiceError();
+	//theError.setStatus(200);
+	//Testing Error for Incident Creation
+	theError.setStatus(200);
+	theError.setMessage("JSON payload error.");
+	theError.setDetail("Simmulated Error");
+	response.setError(theError);
+	
+	
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_ibmg3_hcms/v1/brokerrequest/test</operation_uri>
+        <produces>application/json</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/test</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>false</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-08 00:14:10</sys_created_on>
+        <sys_id>615771fddb2edf00e0f5325f9d961972</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>brokerApprovalResponse</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_ws_operation_615771fddb2edf00e0f5325f9d961972</sys_update_name>
+        <sys_updated_by>sridharp@us.ibm.com</sys_updated_by>
+        <sys_updated_on>2018-06-12 03:37:47</sys_updated_on>
+        <web_service_definition display_value="HCMS BrokerRequest_notused">585c282cdbe21b0037ad349f9d9619b1</web_service_definition>
+        <web_service_version display_value="v1">e8dda4acdbe21b0037ad349f9d9619b5</web_service_version>
+    </sys_ws_operation>
+</record_update>

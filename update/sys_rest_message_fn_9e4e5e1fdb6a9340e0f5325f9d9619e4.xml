@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn">
+    <sys_rest_message_fn action="INSERT_OR_UPDATE">
+        <authentication_type>inherit_from_parent</authentication_type>
+        <basic_auth_password/>
+        <basic_auth_profile/>
+        <basic_auth_user>rannep12@in.ibm.com</basic_auth_user>
+        <content>&#13;
+{&#13;
+  "approvalInfo": {&#13;
+    "ApprovedRITMS": [&#13;
+      {&#13;
+        "ApprovedTasks": [&#13;
+          {&#13;
+            "task_sys_id" : ${ src_task_sys_id},&#13;
+            "taskNumber": ${ src_task_number}, &#13;
+           "serviceOfferingInstanceId": ${src_serviceOfferingInstanceId}, &#13;
+            "taskType": ${ src_taskType}&#13;
+          }&#13;
+        ], &#13;
+        "ritmID": ${src_ritmID }, &#13;
+   	 "serviceOfferingInstanceId":${ src_serviceOfferingInstanceId}, &#13;
+        "serviceName": ${src_serviceName}, &#13;
+	"cmdbCISysid": ${src_cmdbCISysid}, &#13;
+      }, &#13;
+      {&#13;
+        "ApprovedTasks": [&#13;
+          {&#13;
+            "task_sys_id" : ${ src_task_sys_id},&#13;
+            "taskNumber": ${ src_task_number}, &#13;
+           "serviceOfferingInstanceId": ${src_serviceOfferingInstanceId}, &#13;
+            "taskType": ${ src_taskType}&#13;
+          }&#13;
+        ], &#13;
+        "ritmID": ${src_ritmID }, &#13;
+   	 "serviceOfferingInstanceId":${ src_serviceOfferingInstanceId}, &#13;
+        "serviceName": ${src_serviceName}, &#13;
+	"cmdbCISysid": ${src_cmdbCISysid}, &#13;
+      }, &#13;
+    ], &#13;
+    "approvalStatus": ${src_approvalStatus}, , &#13;
+    "approvedBy": ${src_approvedBy}, , &#13;
+    "approvedTs": ${src_approvedTs}, , &#13;
+    "orderNumber": ${src_orderNumber}, , &#13;
+    "requestNumber": ${src_requestNumber}, , &#13;
+    "requested_for": ${src_requested_for}, &#13;
+  }&#13;
+}</content>
+        <function_name>post</function_name>
+        <http_method>post</http_method>
+        <lock>false</lock>
+        <oauth2_profile/>
+        <protocol_name/>
+        <qualified_name>Broker_Approval_Adapter-hcmsbroker [ post ]</qualified_name>
+        <rest_endpoint>https://cb-snow-stage-api.gravitant.net/provision/snow/adapter/v2/snowApprovalResponse</rest_endpoint>
+        <rest_message display_value="Broker_Approval_Adapter-hcmsbroker">5889d69bdb6a9340e0f5325f9d9619a1</rest_message>
+        <sys_class_name>sys_rest_message_fn</sys_class_name>
+        <sys_created_by>vram@us.ibm.com</sys_created_by>
+        <sys_created_on>2018-06-12 18:57:45</sys_created_on>
+        <sys_id>9e4e5e1fdb6a9340e0f5325f9d9619e4</sys_id>
+        <sys_mod_count>65</sys_mod_count>
+        <sys_name>post</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_rest_message_fn_9e4e5e1fdb6a9340e0f5325f9d9619e4</sys_update_name>
+        <sys_updated_by>nmandya1@in.ibm.com</sys_updated_by>
+        <sys_updated_on>2020-05-12 13:05:11</sys_updated_on>
+        <use_basic_auth>false</use_basic_auth>
+        <use_mid_server/>
+        <use_mutual_auth>false</use_mutual_auth>
+    </sys_rest_message_fn>
+</record_update>

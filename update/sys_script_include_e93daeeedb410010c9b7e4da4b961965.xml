@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_ibmg3_hcms.RetrycalltoBroker</api_name>
+        <client_callable>false</client_callable>
+        <description>This Script include passes the response status to scheduled Job which runs every 10 minutes</description>
+        <name>RetrycalltoBroker</name>
+        <script><![CDATA[var RetrycalltoBroker = Class.create();
+RetrycalltoBroker.prototype = {
+    initialize: function() {
+    },
+outBoundResponseCallStatus : function(obj)
+	{
+		gs.info("invoking the retry script include");
+	 var httpStatus, endPoint , requestBody,number,response,responseBody;
+		if(obj.topic.endsWith("Approval"))
+			{
+				//to be decided
+			}
+		else if(obj.topic.endsWith("PreProvisioning"))
+			{
+				gs.info("entering pre provisioning if loop");
+			var restMessageNamePre = "x_ibmg3_hcms.Change Task Provisioning";
+			
+			var rm1 = new sn_ws.RESTMessageV2(restMessageNamePre, 'post');
+				endPoint= rm1.getEndpoint();
+				gs.info("endPoint" + endPoint);
+			rm1.setRequestHeader("Content-Type", "application/json" );
+			rm1.setRequestHeader("Accept","Application/json");
+			rm1.setRequestHeader("Username",gs.getProperty('x_ibmg3_hcms.HCMS_Broker_user_name'));
+			rm1.setRequestHeader("Apikey",gs.getProperty('x_ibmg3_hcms.HCMS_Broker_API_Key'));
+			requestBody = obj.payload;
+			gs.info("requestBody3" + requestBody);	
+				rm1.setRequestBody(requestBody);
+                                rm1.setLogLevel('all');
+                                
+                                //In milliseconds. Wait at most 10 seconds for response from http request.
+                                rm1.setHttpTimeout(10000);
+                                
+                                
+                                response = rm1.execute();
+                                responseBody = response.getBody();
+                                httpStatus = response.getStatusCode();
+				gs.info('http code on sucess3=' +   httpStatus);
+				
+			}
+		else if(obj.topic.endsWith("PostProvisioning"))
+			{
+				gs.info("entering post provisioning if loop");
+			var restMessageNamePost = "x_ibmg3_hcms.Post Provisioning Status Call";
+			var rm = new sn_ws.RESTMessageV2(restMessageNamePost, 'postProvisioning');
+				endPoint= rm.getEndpoint();
+				gs.info("endPoint" + endPoint);
+			rm.setRequestHeader("Content-Type", "application/json" );
+			rm.setRequestHeader("Accept","Application/json");
+			rm.setRequestHeader("Username",gs.getProperty('x_ibmg3_hcms.HCMS_Broker_user_name'));
+			rm.setRequestHeader("Apikey",gs.getProperty('x_ibmg3_hcms.HCMS_Broker_API_Key'));
+			requestBody = obj.payload;
+			gs.info("requestBody" + requestBody);	
+			/*var JSONString = JSON.stringify(requestBody);
+			var EscapedJSONString = JSONString.replace(/\\n/g, "\\n")
+			.replace(/\\'/g, "\\'")
+			.replace(/\\"/g, '\\"')
+			.replace(/\\&/g, "\\&")
+			.replace(/\\r/g, "\\r")
+			.replace(/\\t/g, "\\t")
+			.replace(/\\b/g, "\\b")
+			.replace(/\\f/g, "\\f");*/
+			
+rm.setRequestBody(requestBody);
+                                rm.setLogLevel('all');
+                                
+                                //In milliseconds. Wait at most 10 seconds for response from http request.
+                                rm.setHttpTimeout(10000);
+                                
+                                
+                                response = rm.execute();
+                                responseBody = response.getBody();
+                                httpStatus = response.getStatusCode();
+				gs.info('http code on sucess=' +   httpStatus);
+			}
+		var responses;
+			/*switch(httpStatus)
+		{
+	case 404: //Not Found
+					gs.info("Switch 404 Resend Code");
+					responses = 'yes';
+					break;
+				case 408: //Request Timeout
+					gs.info("Switch 408 Resend Code");
+					responses = 'yes';
+					break;
+				case 500: //Internal Server Error
+					gs.info("Switch 500 Resend Code");
+					responses = 'yes';
+					break;
+				case 502: //Bad Gateway
+					gs.info("Switch 502 Resend Code");
+					responses = 'yes';
+					break;
+				case 503: //Service Unavailable
+					gs.info("Switch 503 Resend Code");
+					responses = 'yes';
+                    gs.info("Switch 500 Resend Code");
+                    responses = 'yes';
+                    break;
+				case 504: //Gateway Timeout
+					gs.info("Switch 504 Resend Code");
+					responses = 'yes';
+					break;
+				default: //All other HTTP 2XX (not 200), 4XX, 5XX require manual intervention and should not be resent.
+					gs.info("Switch default: Resend Code 'No'");
+					responses = 'no';
+			} //end switch
+			
+		*/
+		
+		if(httpStatus > 400 && httpStatus < 500)
+			responses = 'yes';
+		else if(httpStatus > 500 && httpStatus < 600)
+			responses = 'yes';
+		else
+			responses = 'no';
+		if(responses == 'yes')
+			{ 
+				gs.info("entering if loop for wrong code");
+				obj.sequence= parseInt(obj.sequence) + 1;
+			      gs.info("sequence increment" + obj.sequence);
+		if(parseInt(obj.sequence) >= 3){
+			gs.info("entering if loop for creation of incident");
+    //create an incident
+			var inc = new GlideRecord('incident');
+			inc.initialize();
+			inc.short_description= "error caused due to error response received" + endPoint;
+			inc.comments = requestBody + "incident created as bound failed after 3 retry" +endPoint;
+			inc.insert();
+			number = inc.number;
+			
+
+obj.error_string = "incident" + number + "created as bound failed after 3 retry";
+		}
+    /*else
+    obj.error_string = httpStatus + " responseBody" + " ";
+		*/		
+			}
+		else 
+			obj.state = 'processed';
+		obj.update();
+	},
+    type: 'RetrycalltoBroker'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-11-14 11:58:15</sys_created_on>
+        <sys_id>e93daeeedb410010c9b7e4da4b961965</sys_id>
+        <sys_mod_count>30</sys_mod_count>
+        <sys_name>RetrycalltoBroker</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_script_include_e93daeeedb410010c9b7e4da4b961965</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-11-19 09:18:11</sys_updated_on>
+    </sys_script_include>
+</record_update>

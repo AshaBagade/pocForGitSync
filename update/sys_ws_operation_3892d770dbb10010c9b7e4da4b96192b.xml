@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>request (v2)</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    //hcmsLog = new HCMSLogLevel();
+
+    try {
+        //Defining variables
+        var body = request.body.data,
+            requestType, approvalType, approvalStatus, stateStatus, cancelAction, requestedFor, requestedFor_returned, requestorName, requestNumber, requestUpdateTS, requestSysID, requestedForUser, requestor;
+        //Obtain header Information
+        var brokerLocation = body.icb_brokerLocation;
+        var serviceRequestedForUser = body.requested_for;
+        var strShortDescription = body.orderPurpose;
+        var strDescription = body.detailedComments;
+
+        var env1 = body.context.environment;
+        //Track the order number
+        var orderNumber = body.orderNumber;
+        new HCMSLogLevel().LogMsg('info', '*Request Order Number : *' + orderNumber);
+        var orderSubmittedDate = body.orderSubmittedTime;
+
+        //Establish a variable to hold the response body
+        var requestSystemid;
+        var responseBody = {};
+
+        //Set a variable to establish a baseline for the validation check
+        var validationError = "false";
+        validateBaseElements(body);
+
+        //Setting variable values from the request object
+        requestedFor = body.requested_for;
+        requestType = body.requestType;
+
+        var gr = new GlideRecord('sys_user');
+        gr.addEncodedQuery('email=' + requestedFor + '^ORuser_name =' + requestedFor);
+        gr.query();
+        if (gr.next()) {
+            // creation of SR begins
+            if (validationError == "false" && gs.getProperty('x_ibmg3_hcms.Enable_QuickStart') == "false") {
+
+
+                switch (requestType) {
+                    case 'New':
+                        var str = JSON.stringify(body);
+
+                        //Log incoming request payload from broker
+                        new HCMSLogLevel().LogMsg('info', '*New Request Payload*' + str);
+
+                        requestSystemid = new generateSingleCart_V2().processRequest(str, brokerLocation, requestedFor);
+
+                        //Log response request number from scoped cart API
+                        new HCMSLogLevel().LogMsg('info', '* Servicenow Request Number for order ' + orderNumber + 'is : *' + requestSystemid);
+                        //Set the response body
+                        responseBody.requestNumber = requestSystemid;
+                        response.setBody(responseBody);
+                        break;
+
+                    case 'Edit':
+                        str = JSON.stringify(body);
+
+                        //Log incoming request payload from broker
+                        new HCMSLogLevel().LogMsg('info', '*Edit Request Payload*' + str);
+
+                        requestSystemid = new generateSingleCart_V2().processRequest(str, brokerLocation, requestedFor);
+
+                        //Log response request number from scoped cart API
+                        new HCMSLogLevel().LogMsg('info', '* Servicenow Request Number for order ' + orderNumber + ' is :  *' + requestSystemid);
+                        //Set the response body
+                        responseBody.requestNumber = requestSystemid;
+                        response.setBody(responseBody);
+                        break;
+
+                    case 'Terminate':
+
+                        str = JSON.stringify(body);
+                        new HCMSLogLevel().LogMsg('info', '*Terminate Request Payload*' + str);
+                        try {
+                            requestSystemid = new generateSingleCart_V2().processRequest(str, brokerLocation, requestedFor);
+                        } catch (ex) {}
+
+                        responseBody.requestNumber = requestSystemid;
+                        response.setBody(responseBody);
+                        break;
+
+                    case 'operation':
+
+                        str = JSON.stringify(body);
+                        new HCMSLogLevel().LogMsg('info', '*Operations Request Payload*' + str);
+                        try {
+                            requestSystemid = new generateSingleCart_V2().processRequest(str, brokerLocation, requestedFor);
+                        } catch (ex) {
+                            new HCMSLogLevel.LogMsg("error", "Operation Request Type error for order " + orderNumber + ' ' + ex);
+                        }
+
+                        responseBody.requestNumber = requestSystemid;
+                        response.setBody(responseBody);
+                        break;
+
+
+                    default:
+                        raiseResponseError("requestType attribute");
+                }
+            } //end if validationError
+
+            return {
+                //response body already defined and added to the response object
+            };
+
+        } else {
+            // throw error as there is no User in NOW instance.
+            raiseResponseErrorNoUserPresent("User not found in ServiceNow hence, no Service request created.");
+        }
+
+    } catch (err) {
+        new HCMSLogLevel.LogMsg("error", "Request Creation API error: " + this.type + "(" + err.message + ")");
+    }
+
+
+    //********* VALIDATION FUNCTIONS  ************
+    //Function to validate the base level elements
+    function validateBaseElements(bBody) {
+        var ritmCount = bBody.requestedItems;
+        for (var i = 0; i < ritmCount.length; i++) {
+            //catalog_item_name
+            var catName = bBody.requestedItems[i].catalog_item_name;
+            if (catName) {
+                //check if valid MCMP catalog item
+                var mcmCat_items = gs.getProperty('x_ibmg3_hcms.MCMP_catalog_items').split(';'); //check if MCMP catalog item
+				gs.info("mcmpcatalog length :" + mcmCat_items.length);
+                var catFound = "false";
+                for (var j = 0; j < mcmCat_items.length; j++) {
+                    if (mcmCat_items[j].indexOf(catName) > -1 && mcmCat_items[j].length == catName.length) {
+                        catFound = "true";
+                    }
+                }
+                if (catFound == "false") {
+                    validationError = "true";
+                    raiseResponseError("catalog_item_name attribute doesn't hold MCMP catalog name: " + bBody.orderNumber);
+                }
+            } else {
+                validationError = "true";
+                raiseResponseError("catalog_item_sys_id attribute missing for order: " + bBody.orderNumber);
+            }
+
+
+            //Change Approval Required
+            if (!(bBody.requestedItems[i].changeApprovalRequired)) {
+                validationError = "true";
+                raiseResponseError("changeApprovalRequired missing for order: " + bBody.orderNumber);
+            }
+            if (empty(bBody.requestedItems[i].changeApprovalRequired)) {
+                validationError = "true";
+                raiseResponseError("changeApprovalRequired missing for order: " + bBody.orderNumber);
+            }
+        }
+        //requested_for
+        if (!bBody.requested_for) {
+            validationError = "true";
+            raiseResponseError("requested_for attribute missing for order: " + bBody.orderNumber);
+        }
+        if (empty(bBody.requested_for)) {
+            validationError = "true";
+            raiseResponseError("requested_for attribute bad value for order: " + bBody.orderNumber);
+        }
+
+        //orderNumber
+        if (!bBody.orderNumber) {
+            validationError = "true";
+            raiseResponseError("orderNumber attribute missing for order: " + bBody.orderNumber);
+        }
+        if (empty(bBody.orderNumber)) {
+            validationError = "true";
+            raiseResponseError("orderNumber attribute bad value for order: " + bBody.orderNumber);
+        }
+
+        //requestType
+        if (!bBody.requestType) {
+            validationError = "true";
+            raiseResponseError("requestType attribute missing for order: " + bBody.orderNumber);
+        }
+        if (empty(bBody.requestType)) {
+            validationError = "true";
+            raiseResponseError("requestType attribute bad value for order: " + bBody.orderNumber);
+        }
+
+        if (bBody.requestType == "New") {
+
+            var payloadQuantity = bBody.requestedItems.quantity;
+            var intQuantity = parseInt(payloadQuantity, 10);
+
+            if (intQuantity < 1) {
+                validationError = "true";
+                raiseResponseError("quantity attribute less than one for order: " + bBody.orderNumber);
+            }
+        }
+
+        if (bBody.requestType == "operation") {
+            //resource name validation
+            var resrc = new HCMSOperationsValidations().validateResourceName(bBody);
+            if (!resrc || resrc == "") {
+                validationError = "true";
+                raiseResponseError("ResourceName not available in cmdb for order: " + bBody.orderNumber);
+            }
+        }
+    }
+    //Function to handle string tests
+    function empty(e) {
+
+        //Test the string
+        switch (e) {
+            case "":
+                return true;
+            case 0:
+                return true;
+            case "0":
+                return true;
+            case null:
+                return true;
+                //case false:
+            case typeof this == "undefined":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    //Function to handle response error messages
+    function raiseResponseError(message) {
+
+        //Raises a response error
+        var theError = new sn_ws_err.ServiceError();
+        theError.setStatus(403);
+        theError.setMessage("JSON payload error.");
+        theError.setDetail(message);
+        response.setError(theError);
+
+        //Log the error on processing the request
+        new HCMSLogLevel().LogMsg("error", "Request Creation Validation : ERROR: JSON payload error.");
+        new HCMSLogLevel().LogMsg("error", "Request Creation Validation : ERROR: " + message);
+        new HCMSLogLevel().LogMsg("info", "Request Creation Validation : ERROR: " + message + " for order: " + body.orderNumber);
+
+    }
+
+    //Function to handle response error messages for no SR creation
+    function raiseResponseErrorNoUserPresent(message) {
+
+        //Raises a response error
+        var theError = new sn_ws_err.ServiceError();
+        theError.setStatus(403);
+        theError.setMessage("Service Request creation aborted.");
+        theError.setDetail(message);
+        response.setError(theError);
+
+        //Log the error on processing the request
+        new HCMSLogLevel().LogMsg("error", "Request Creation : ERROR: Service Request creation aborted.");
+        new HCMSLogLevel().LogMsg('error', 'Request auto rejected. No user found in ServiceNow. Order Num: ' + body.orderNumber);
+        new HCMSLogLevel().LogMsg("error", "Request Creation: ERROR: " + message);
+        new HCMSLogLevel().LogMsg("info", "Request Creation: ERROR: " + message + " for order " + body.orderNumber);
+    }
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_ibmg3_hcms/v2/broker/request</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/request</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-12-16 10:03:48</sys_created_on>
+        <sys_id>3892d770dbb10010c9b7e4da4b96192b</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>request (v2)</sys_name>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sys_ws_operation_3892d770dbb10010c9b7e4da4b96192b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-12-16 10:04:15</sys_updated_on>
+        <web_service_definition display_value="HCMS Broker">3a955909dbe3d70037ad349f9d96199a</web_service_definition>
+        <web_service_version display_value="v2">7c92db30dbb10010c9b7e4da4b9619d3</web_service_version>
+    </sys_ws_operation>
+</record_update>

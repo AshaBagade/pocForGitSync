@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="hasWorkflow=true" audit="true" create_roles="catalog_admin" extends="task" label="Requested Item" max_length="40" name="sc_req_item" sizeclass="150" text_index="true" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Broker Config Values" max_length="4000" name="x_ibmg3_hcms_broker_approval_item_json" type="html"/>
+        <element attributes="edge_encryption_enabled=true" label="Bill Of Materials Summary" max_length="4000" name="x_ibmg3_hcms_broker_approval_item_summary" type="html"/>
+        <element label="Cloud Broker Service Name" max_length="40" name="x_ibmg3_hcms_cloud_broker_service_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Related Change Request" max_length="32" name="x_ibmg3_hcms_related_change_request" reference="change_request" type="reference"/>
+        <element label="service_offering_Id" max_length="80" name="x_ibmg3_hcms_service_offering_id" type="string"/>
+        <element label="service_offering_instance_id" max_length="80" name="x_ibmg3_hcms_service_offering_instance_id" type="string"/>
+    </element>
+</database>

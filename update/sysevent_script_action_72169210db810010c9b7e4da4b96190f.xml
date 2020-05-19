@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_script_action">
+    <sysevent_script_action action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition_script/>
+        <description/>
+        <event_name>x_ibmg3_hcms.test.event</event_name>
+        <name>Test123</name>
+        <order>100</order>
+        <script><![CDATA[try {
+	//sending change task details to broker
+	var outboundCall = new PostProvisioningHookCallToBroker().postProvisionStatus(current);
+	gs.info("outbound post call response for script action=" +outboundCall);
+	var response;
+	switch(outboundCall)
+		{
+	case 404: //Not Found
+					gs.info("Switch 404 Resend Code");
+					response = 'yes';
+					break;
+				case 408: //Request Timeout
+					gs.info("Switch 408 Resend Code");
+					response = 'yes';
+					break;
+				case 500: //Internal Server Error
+					gs.info("Switch 500 Resend Code");
+					response = 'yes';
+					break;
+				case 502: //Bad Gateway
+					gs.info("Switch 502 Resend Code");
+					response = 'yes';
+					break;
+				case 503: //Service Unavailable
+					gs.info("Switch 503 Resend Code");
+					response = 'yes';
+                     break;
+                   
+                case 500: //Internal Server Error
+                    gs.info("Switch 500 Resend Code");
+                    response = 'yes';
+                    break;
+                case 502: //Bad Gateway
+                    gs.info("Switch 502 Resend Code");
+                    response = 'yes';
+                    break;
+                case 503: //Service Unavailable
+                    gs.info("Switch 503 Resend Code");
+                    response = 'yes';
+                    gs.info("Switch 500 Resend Code");
+				break;
+				case 504: //Gateway Timeout
+					gs.info("Switch 504 Resend Code");
+					response = 'yes';
+					break;
+				default: //All other HTTP 2XX (not 200), 4XX, 5XX require manual intervention and should not be resent.
+					gs.info("Switch default: Resend Code 'No'");
+					response = 'no';
+			} //end switch
+	if (response == 'yes' &&  parseInt(event.parm2) < 3) 
+	{
+		gs.info("entered script action if");
+		gs.info("event parameter value:" + parseInt(event.parm2));//the value which came in from invoking script action with count value as 2
+		//gs.info("timeevent paramter" + event.parm3);
+		gs.info("username = " + event.parm1);
+var count = parseInt(event.parm2);
+count++;
+var dateTime = new GlideDateTime();
+dateTime.addSeconds(60);
+gs.eventQueueScheduled("x_ibmg3_hcms.test.event", current, gs.getUserID(), count, dateTime);//count is 2 and time is 10:03 second time invoked //count value is 4 and time is 10:30 third time invoked// next time it won't enter the if loop
+		
+		gs.info('countaction value: ' + count);
+		gs.info('datetimeaction value: ' + dateTime);
+		gs.info('currentaction object: ' + current);
+		
+		}
+
+	}
+catch(ex) {
+	new HCMSLogLevel().LogMsg("error","Change Task Status to Broker BR error "+ex);
+}
+
+]]></script>
+        <synchronous>false</synchronous>
+        <sys_class_name>sysevent_script_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-11-07 09:36:19</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>72169210db810010c9b7e4da4b96190f</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>Test123</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="IBM Hybrid Cloud Management" source="x_ibmg3_hcms">c5a89eb6db969b00e0f5325f9d96198a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="IBM Hybrid Cloud Management">c5a89eb6db969b00e0f5325f9d96198a</sys_scope>
+        <sys_update_name>sysevent_script_action_72169210db810010c9b7e4da4b96190f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-11-12 11:09:54</sys_updated_on>
+    </sysevent_script_action>
+</record_update>
